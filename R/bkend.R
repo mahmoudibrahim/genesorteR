@@ -17,7 +17,7 @@ binarize = function(x, method = "median") {
   colInd = (rep(seq_along(dp),dp))[ww]
   rowInd = (x@i+1)[ww]
   genes = rownames(x)
-  x = sparseMatrix(rowInd[1], colInd[1], dims=x@Dim)
+  x = Matrix::sparseMatrix(rowInd[1], colInd[1], dims=x@Dim)
   x[cbind(rowInd,colInd)] = 1
   x = as(x, "dgCMatrix")
   rownames(x) = genes

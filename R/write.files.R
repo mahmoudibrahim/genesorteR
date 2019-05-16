@@ -19,7 +19,7 @@
 #'
 #' @examples
 #' data(sim)
-#' sg = sortGenes(sim$exp, sim$classLab)
+#' sg = sortGenes(sim$exp, sim$cellType)
 #' \dontrun{write.files(sg)} #write all files for all genes.
 #' \dontrun{write.files(sg, markers = c("g1","g2"))} #additionally write files that are restricted to g1 and g2.
 write.files = function(gs, prefix = "genesorteROuts", markers = NULL) {

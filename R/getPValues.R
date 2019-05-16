@@ -50,7 +50,7 @@ getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, s
 
   ngroup = ncol(gs$specScore)
   ngene = nrow(gs$specScore)
-  mm = sparseMatrix(1, 1, dims = c(ngene, (ngroup * numPerm)))
+  mm = Matrix::sparseMatrix(1, 1, dims = c(ngene, (ngroup * numPerm)))
   mm = mm * 1
   dd1L = rep(0, length = numPerm)
 

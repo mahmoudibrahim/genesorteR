@@ -37,7 +37,7 @@ plotCorrelationHeat = function(gs, markers = NULL, corMethod = "pearson", colors
   rownames(cc) = colnames(gs$specScore)
   colnames(cc) = colnames(gs$specScore)
 
-  p=pheatmap(cc, breaks = seq(-1,1,length.out = 99), show_rownames=T, show_colnames=T, display_numbers=displayNumbers, col = colors)
+  p=pheatmap(cc, breaks = seq(-1,1,length.out = 99), show_rownames=T, show_colnames=T, display_numbers=displayNumbers, color = colors)
 
   if (outs) {
     return(p)

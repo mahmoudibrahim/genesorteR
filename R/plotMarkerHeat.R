@@ -32,15 +32,16 @@
 #' plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers)
 #'
 #' #so now cluster genes and return the clustering: a better looking plot
-#' pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=T, outs=T)
+#' pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, outs=TRUE)
 #' pp$gene_class_info #cell clusters
 #'
 #' #only cluster genes, do not make plots
-#' pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=T, outs=T, plotheat=F)
+#' pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, 
+#' outs=TRUE, plotheat=FALSE)
 #'
 #'
 #' #reorder cell clusters in the heatmap
-#' pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=T, newOrder = c(2,1,3))
+#' pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(2,1,3))
 plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c("orangered4","orangered","gray90","dodgerblue","dodgerblue4")))(n=100), newOrder = 1:length(unique(classes)), clusterGenes = FALSE, clusterGenesK = length(unique(classes)), outs = FALSE, plotheat = TRUE, seed = 10) {
 
   if (is.character(classes) || is.factor(classes)) {
@@ -79,14 +80,14 @@ plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c
 
   if (clusterGenes) {
     if (plotheat) {
-      p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", col = colors, gaps_col =  cumsum(table(sort(classes))), gaps_row =  cumsum(table(sort(kk))), display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101))
+      p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, gaps_col =  cumsum(table(sort(classes))), gaps_row =  cumsum(table(sort(kk))), display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101))
     } else {p = NULL}
     if (outs) {
       return(list(pheat = p, new_class_info = classes, gene_class_info = kk))
     }
   } else {
     if (plotheat) {
-      p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", col = colors, gaps_col =  cumsum(table(sort(classes))), display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101))
+      p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, gaps_col =  cumsum(table(sort(classes))), display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101))
     } else {p = NULL}
     if (outs) {
       return(list(pheat = p, new_class_info = classes))

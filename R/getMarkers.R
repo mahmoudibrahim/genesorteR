@@ -51,7 +51,7 @@
 #' set.seed(1234)
 #' exp = matrix(sample(0:20,1000,replace=TRUE), ncol = 20)
 #' rownames(exp) = sapply(1:50, function(x) paste0("g", x))
-#' cellType = sample(c("cell type 1","cell type 2"),20,replace=T)
+#' cellType = sample(c("cell type 1","cell type 2"),20,replace=TRUE)
 #' sg = sortGenes(exp, cellType)
 #' mm = getMarkers(sg,quant=0.95)
 #' length(mm$markers) #only one marker gene was found
