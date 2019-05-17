@@ -38,7 +38,7 @@
 #'   \item{adjpval}{A matrix with the same size as \code{pval}, containing the
 #'   corrected p-values using the method specified in \code{correctMethod}}
 #' @export
-#' @author Mahmoud M Ibrahim <m3i@@almostscience.site>
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @examples
 #' data(sim)
 #' sg = sortGenes(sim$exp, sim$cellType)

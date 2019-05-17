@@ -15,6 +15,7 @@
 #'   TRUE by default.
 #' @return If \code{outs} is TRUE, the pheatmap object will be returned.
 #' @export
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @examples
 #' data(kidneyTabulaMuris)
 #' sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)

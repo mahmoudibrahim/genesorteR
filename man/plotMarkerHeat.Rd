@@ -68,5 +68,5 @@ outs=TRUE, plotheat=FALSE)
 pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(2,1,3))
 }
 \author{
-Mahmoud M Ibrahim <m3i@selfishscience.net>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }

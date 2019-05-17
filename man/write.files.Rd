@@ -34,5 +34,5 @@ sg = sortGenes(sim$exp, sim$cellType)
 \dontrun{write.files(sg, markers = c("g1","g2"))} #additionally write files that are restricted to g1 and g2.
 }
 \author{
-Mahmoud M Ibrahim <m3i@selfishscience.net>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }

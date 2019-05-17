@@ -71,5 +71,5 @@ mean(classAUC)
 correlate well with the AUC metric returned by \code{getClassAUC}.
 }
 \author{
-Mahmoud M Ibrahim <m3i@selfishscience.net>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }

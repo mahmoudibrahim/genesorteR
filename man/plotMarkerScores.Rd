@@ -28,5 +28,5 @@ mm = getMarkers(sg,quant=0.99)
 plotMarkerScores(mm, sg)
 }
 \author{
-Mahmoud M Ibrahim <m3i@selfishscience.net>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }

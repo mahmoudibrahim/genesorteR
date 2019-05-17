@@ -7,7 +7,7 @@
 #' @param markers A character vector containing the genes to highlight in the
 #'   scatter plot.
 #' @param colors A color palette to use for the scatter plot.
-#' @author Mahmoud M Ibrahim <m3i@@selfishscience.net>
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #'
 #' @export
 #' @examples

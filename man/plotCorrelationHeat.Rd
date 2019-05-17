@@ -45,3 +45,6 @@ plotCorrelationHeat(sg, markers = mm$markers, corMethod = "spearman")
 #do not plot correlation values
 plotCorrelationHeat(sg, markers = mm$markers, corMethod = "spearman", displayNumbers = FALSE)
 }
+\author{
+Mahmoud M Ibrahim <mmibrahim@pm.me>
+}

@@ -21,7 +21,7 @@
 #'   \item{gene_class_info}{Gene cluster assignments if gene clustering was
 #'   requested. See Details.} \item{new_class_info}{The new order of cell
 #'   clusters. See Examples.}
-#' @author Mahmoud M Ibrahim <m3i@@selfishscience.net>
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @export
 #' @examples
 #' data(kidneyTabulaMuris)

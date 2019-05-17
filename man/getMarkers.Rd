@@ -4,7 +4,7 @@
 \alias{getMarkers}
 \title{getMarkers}
 \usage{
-getMarkers(gs, quant = 0.95, mutualInfo = FALSE, classEnt = FALSE)
+getMarkers(gs, quant = 0.99, mutualInfo = FALSE, classEnt = FALSE)
 }
 \arguments{
 \item{gs}{A list containing \code{$specScore} sparse matrix, \code{$binary}
@@ -48,11 +48,12 @@ is that genes with low entropy are either lowly expressed or highly specific
 to one or few cell clusters. Therefore, we select the top n\% of genes
 according to the scaled specificity score and then cluster those genes based
 on their Shannon Index. \code{n} is controlled by \code{quant}, the default
-value 0.95 means top 5% of genes. Using lower values is not recommended or
-necessary, but this can be increased to 0.99 for example to obtain a smaller
-set of genes. Scaling the specificity score for each cluster is done to try
-and guarantee that markers for each cluster will eventually be selected even
-if the cluster is not absoolutely well separated.
+value 0.99 means top 1% of genes. Using lower values up to 0.95 may be ok but 
+lower values are not recommended nor necessary. It can also be increased
+to 0.999 for example to obtain a smaller set of genes. Scaling the specificity 
+score for each cluster is done to try and guarantee that markers for each 
+cluster will eventually be selected even if the cluster is not absoolutely
+well separated.
 
 Cluster separation is represented by a cluster Shannon Index calculated on
 the scaled specificity score of selected marker genes for each cluster. The
@@ -86,5 +87,5 @@ mm = getMarkers(sg, quant = 0.999)
 length(mm$markers) #11 genes that can alone descriminate between the cell types
 }
 \author{
-Mahmoud M Ibrahim <m3i@almostscience.site>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }

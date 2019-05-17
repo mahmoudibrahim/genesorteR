@@ -15,7 +15,7 @@
 #' @param prefix The prefix for saving the files.
 #' @param markers Additionally, output files restricted to these genes. A
 #'   character vector.
-#' @author Mahmoud M Ibrahim <m3i@@selfishscience.net>
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #'
 #' @examples
 #' data(sim)

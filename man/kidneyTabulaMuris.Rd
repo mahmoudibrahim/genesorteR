@@ -4,9 +4,8 @@
 \name{kidneyTabulaMuris}
 \alias{kidneyTabulaMuris}
 \title{A subset of the Tabula Muris SmartSeq data, restricted to three cell types from Kidney.}
-\format{A list with two components: \describe{
-  \item{exp}{Gene expression sparse matrix of class dgCMatrix, with normalized log expression values. Rows are genes, columns are cells.} \item{cellType}{A character vector containing the cell types.}
-  }}
+\format{A list with two components:
+\describe{\item{exp}{Gene expression sparse matrix of class dgCMatrix, with normalized log expression values. Rows are genes, columns are cells.} \item{cellType}{A character vector containing the cell types.}}}
 \usage{
 kidneyTabulaMuris
 }

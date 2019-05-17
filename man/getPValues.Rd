@@ -63,5 +63,5 @@ pp = getPValues(sg)
 markers = names(which(apply(pp$adjpval, 1, function(x) any(x < 0.01))))
 }
 \author{
-Mahmoud M Ibrahim <m3i@almostscience.site>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }

@@ -54,8 +54,8 @@
 #'   number of cell clusters, containing the fraction of cells belonging to each
 #'   cluster.} \item{inputMat}{the input \code{x} matrix, after being coerced
 #'   to a sparse matrix of class dgCMatrix.} \item{inputClass}{the input
-#'   \code{classLabels} vector or factor.}
-#' @author Mahmoud M Ibrahim <m3i@@selfishscience.net>
+#'   \code{classLabels} after being coerced to a factor.}
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @export
 #' @examples
 #' #basic functionality
@@ -68,29 +68,32 @@
 #' #naive binarization keeps any non-zero input in the input matrix
 #' sg_naive = sortGenes(exp, classLab, binarizeMethod = "naive")
 sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
+	
+	classLabels = as.factor(classLabels)
+	classLabels = classLabels[,drop = TRUE] #drop nonoccuring levels (issue a warning?)
+	
+	classLabelsNum = as.integer(classLabels)
+	classLabelsLab = levels(classLabels)
 
-  classLabelsNum = as.numeric(as.factor(classLabels))
-  classLabelsLab = levels(as.factor(classLabels))
+	x = as(x, "dgCMatrix")
 
-  x = as(x, "dgCMatrix")
+	xbin = binarize(x, method = binarizeMethod)
 
-  xbin = binarize(x, method = binarizeMethod)
+	rem = which((Matrix::rowSums(xbin$mat)) == 0)
+	if (length(rem) > 0) {
+		xbin$mat = xbin$mat[-rem,]
+		##issue a warning here##
+	}
 
-  rem = which((Matrix::rowSums(xbin$mat)) == 0)
-  if (length(rem) > 0) {
-    xbin$mat = xbin$mat[-rem,]
-    ##issue a warning here##
-  }
+	classProb = getClassProb(classLabelsNum)
+	names(classProb) = classLabelsLab
 
-  classProb = getClassProb(classLabelsNum)
-  names(classProb) = classLabelsLab
+	geneProb = getGeneProb(xbin$mat)
 
-  geneProb = getGeneProb(xbin$mat)
+	condGeneCluster = getGeneConditionalCluster_stats(xbin$mat, classProb, classLabels, cores = cores)
+	clusterPostGene = getClusterPostGene(condGeneCluster, geneProb, classProb)
+	specScore = getSpecScore(clusterPostGene, condGeneCluster)
 
-  condGeneCluster = getGeneConditionalCluster_stats(xbin$mat, classProb, classLabels, cores = cores)
-  clusterPostGene = getClusterPostGene(condGeneCluster, geneProb, classProb)
-  specScore = getSpecScore(clusterPostGene, condGeneCluster)
-
-  return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, inputMat = x, inputClass = classLabels))
+	return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, inputMat = x, inputClass = classLabels))
 
 }

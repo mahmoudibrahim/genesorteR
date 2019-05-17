@@ -45,9 +45,9 @@ getGeneProb = function(x) {
 #get the prior probability of each cluster across the entire data set
 getClassProb = function(x) {
 
-  x = as.vector(x)
+  #x = as.vector(x)
 
-  probs = as.vector(table(x) / length(x))
+  probs = table(x) / length(x)
 
   return(probs)
 }

@@ -30,7 +30,7 @@
 #' @return \code{getClassAUC} returns a numeric vector of length
 #'   \code{ncol($specScore)} that contains the AUC for each cell cluster.
 #' @export
-#' @author Mahmoud M Ibrahim <m3i@@selfishscience.net>
+#' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @examples
 #' #randomly generated cell clusters
 #' set.seed(1234)
@@ -62,6 +62,7 @@ getClassAUC = function(gs, markers = NULL, plotCurves = TRUE, colors = c("#d64e3
 
     if (plotCurves == TRUE) {
       plot(score(1:nrow(gs$specScore)), score(gs$specScore[order(gs$specScore[,1], decreasing=F),1]), ylim = c(1,0), type = "l", col = colors[1], lwd = 4, xlab = "Genes (Increasing Specificity Score)", ylab = "Scaled Specificity Score")
+     lines(seq(0,1,length.out = 100), seq(0,1,length.out=100), lty = 2, col = "#99999940", lwd = 3)
       for (i in 2:ncol(gs$specScore)) {
         lines(score(1:nrow(gs$specScore)), score(gs$specScore[order(gs$specScore[,i], decreasing=F),i]), ylim = c(1,0), type = "l", col = colors[i], lwd = 4)
       }
@@ -76,6 +77,7 @@ getClassAUC = function(gs, markers = NULL, plotCurves = TRUE, colors = c("#d64e3
 
     if (plotCurves == TRUE) {
       plot(score(1:nrow(temp)), score(temp[order(temp[,1], decreasing=F),1]), ylim = c(1,0), type = "l", col = colors[1], lwd = 4, xlab = "Genes (Increasing Specificity Score)", ylab = "Scaled Specificity Score")
+		lines(seq(0,1,length.out = 100), seq(0,1,length.out=100), lty = 2, col = "#99999940", lwd = 3)
       for (i in 2:ncol(gs$specScore)) {
         lines(score(1:nrow(temp)), score(temp[order(temp[,i], decreasing=F),i]), ylim = c(1,0), type = "l", col = colors[i], lwd = 4)
       }

@@ -1,12 +1,12 @@
 Package: genesorteR
 Type: Package
 Title: Feature Ranking in Clustered Single Cell Data
-Version: 0.1.0
+Version: 0.1.1
 Author: Mahmoud M Ibrahim
-Maintainer: Mahmoud M Ibrahim <m3i@almostscience.site>
-Description: The main purpose of this R extension is to select features in (possibly large) single cell data including scRNA-Seq and scATAC-Seq.
+Maintainer: Mahmoud M Ibrahim <mmibrahim@pm.me>
+Description: The main purpose of this R extension is to select features in (possibly very large) single cell data including scRNA-Seq and scATAC-Seq.
     The main idea is that the dropout rate of a gene is a good measure of its expression, and that empirical statistics calculated based on binarized expression matrices are sufficient to select marker genes in a way that is consistent with the expected definition of "marker gene" in experimental biology research.
-    It can also provide a ranking of gene (or in fact whatever features present in the data) specificity to each cell cluster as well as select smaller sets of marker genes by a permutation test and using entropy-based feature selection.
+    It can also provide a ranking of genes (or in fact whatever features present in the data) specificity to each cell cluster, as well as select smaller sets of marker genes by a permutation test and using entropy-based feature selection.
     To assess cell clustering quality, some functions can also compute cell cluster quality metrics.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8

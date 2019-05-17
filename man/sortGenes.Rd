@@ -41,7 +41,7 @@ many cores to use for parallelization using mclapply.}
   number of cell clusters, containing the fraction of cells belonging to each
   cluster.} \item{inputMat}{the input \code{x} matrix, after being coerced
   to a sparse matrix of class dgCMatrix.} \item{inputClass}{the input
-  \code{classLabels} vector or factor.}
+  \code{classLabels} after being coerced to a factor.}
 }
 \description{
 sortGenes is the main function of the genesorteR package. It takes a gene
@@ -83,5 +83,5 @@ sg = sortGenes(exp, classLab)
 sg_naive = sortGenes(exp, classLab, binarizeMethod = "naive")
 }
 \author{
-Mahmoud M Ibrahim <m3i@selfishscience.net>
+Mahmoud M Ibrahim <mmibrahim@pm.me>
 }
