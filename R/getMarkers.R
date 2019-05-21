@@ -13,10 +13,10 @@
 #' according to the scaled specificity score and then cluster those genes based
 #' on their Shannon Index. \code{n} is controlled by \code{quant}, the default
 #' value 0.99 means top 1% of genes. Using lower values up to 0.95 may be ok but 
-#' lower values are not recommended nor necessary. It can also be increased
+#' lower values than 0.95 are not recommended nor necessary. It can be increased
 #' to 0.999 for example to obtain a smaller set of genes. Scaling the specificity 
-#' score for each cluster is done to try and guarantee that markers for each 
-#' cluster will eventually be selected even if the cluster is not absoolutely
+#' score for each cluster is done to try to guarantee that markers for each 
+#' cluster will eventually be selected even if the cluster is not absolutely
 #' well separated.
 #'
 #' Cluster separation is represented by a cluster Shannon Index calculated on

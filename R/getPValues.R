@@ -85,6 +85,9 @@ getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, s
   } else {
     wgene = which(rownames(gs$specScore) %in% testGenes)
     ngeneT = length(wgene) #give a warning if length is smaller than the length of user argument
+    if (ngeneT != length(testGenes)) {
+		message("Some of the genes you specified with 'testGenes' were not found. Were they filtered out by 'sortGenes()?'")
+	}
     namesT = rownames(gs$specScore)[wgene]
 
     if (cores == 1) {

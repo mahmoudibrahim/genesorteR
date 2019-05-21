@@ -70,8 +70,10 @@
 sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
 	
 	classLabels = as.factor(classLabels)
-	classLabels = classLabels[,drop = TRUE] #drop nonoccuring levels (issue a warning?)
-	
+	if (length(setdiff(levels(classLabels), classLabels)) > 0) {
+		classLabels = classLabels[,drop = TRUE] #drop nonoccuring levels
+		message("The cell type factor had some empty levels. You probably don't need to do anything, but cell types were likely filtered beforehand.")
+	}
 	classLabelsNum = as.integer(classLabels)
 	classLabelsLab = levels(classLabels)
 
@@ -82,7 +84,7 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
 	rem = which((Matrix::rowSums(xbin$mat)) == 0)
 	if (length(rem) > 0) {
 		xbin$mat = xbin$mat[-rem,]
-		##issue a warning here##
+		message("Some genes were removed because they were zeros in all cells after binarization. You probably don't need to do anything but you might want to prefilter the genes if you haven't or use 'naive' binarization instead of 'median'. Excluded genes are available in the output under '$removed'.")
 	}
 
 	classProb = getClassProb(classLabelsNum)
