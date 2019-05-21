@@ -8,8 +8,8 @@ plotMarkerHeat(exp, classes, markers,
   colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90",
   "dodgerblue", "dodgerblue4")))(n = 100),
   newOrder = 1:length(unique(classes)), clusterGenes = FALSE,
-  clusterGenesK = length(unique(classes)), outs = FALSE,
-  plotheat = TRUE, seed = 10)
+  clusterGenesK = length(unique(classes)), averageCells = 0,
+  outs = FALSE, plotheat = TRUE, gaps = TRUE, seed = 10)
 }
 \arguments{
 \item{exp}{A matrix of expression values. Typically the one supplied to
@@ -29,10 +29,16 @@ plotMarkerHeat(exp, classes, markers,
 \item{clusterGenesK}{How many clusters should genes by clustered into? See
 Details.}
 
+\item{averageCells}{Plot averages of cells instead of individual cells. Use 
+you have a large number of genes. See Details.}
+
 \item{outs}{Should gene cluster output and pheatmap object be returned? FALSE
 by default.}
 
 \item{plotheat}{Should the heatmap be drawn? TRUE by default.}
+
+\item{gaps}{Should the heatmap have gaps between cell types and gene clusters? 
+TRUE by default.}
 
 \item{seed}{Randomization seed used for gene clustering initialization.}
 }
@@ -47,6 +53,22 @@ If \code{outs} is TRUE, \code{plotMarkerHeat} returns a list
 Plot a heatmap of expression values for a select set of genes. Optionally
 also cluster those genes.
 }
+\details{
+\code{clusterGenesK} parameter controls the number of gene clusters when 
+\code{clusterGenes} is \code{TRUE}. By default, it is equal to the number of
+cell types/clusters. This is usually a good initial guess, the optimal 
+number of clusters (what does that even mean?) is typically somewhere around
+this value in my subjective experience.
+
+By default, the heatmap plots every single cell in one column, this might
+take forever if you have a lot of cells (would say >10k) or a slow computer
+or it can crash when you do not have enough RAM. If so, it might be good to 
+set \code{averageCells} to \code{n} where \code{n} is the number of cells you 
+want to average. For example, if \code{averageCells = 10} every 10 cells will 
+be averaged (without averaging across cell clusters) before plotting the heatmap.
+if \code{averageCells =< 1}, no averaging happens. Hint: If you want one column 
+per cell cluster, set \code{averageCells} to a very high number.
+}
 \examples{
 data(kidneyTabulaMuris)
 sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
@@ -59,13 +81,16 @@ plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers)
 pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, outs=TRUE)
 pp$gene_class_info #cell clusters
 
+#reorder cell clusters in the heatmap
+plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,1,2))
+
+#average every 4 cells to make a less intense heatmap
+plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,2,1),
+averageCells = 4)
+
 #only cluster genes, do not make plots
 pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, 
 outs=TRUE, plotheat=FALSE)
-
-
-#reorder cell clusters in the heatmap
-pp = plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(2,1,3))
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

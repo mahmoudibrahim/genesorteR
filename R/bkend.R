@@ -148,3 +148,14 @@ getAUC = function(x, y) {
 	return(sum(x * dY) + sum(dX * dY)/2)
 
 }
+
+#bin means of a vector, thanks to the mysterious user on stackoverflow: https://stackoverflow.com/a/43635971/2435654
+binMean = function (vec, every, na.rm = FALSE) {
+	n = length(vec)
+	x = .colMeans(vec, every, n %/% every, na.rm)
+	r = n %% every
+	if (r) {
+		x = c(x, mean.default(vec[(n - r + 1):n], na.rm = na.rm))
+	}
+	return(x)
+}
