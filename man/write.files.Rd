@@ -4,7 +4,8 @@
 \alias{write.files}
 \title{write.files}
 \usage{
-write.files(gs, prefix = "genesorteROuts", markers = NULL)
+write.files(gs, prefix = "genesorteROuts", markers = NULL,
+  eachCluster = FALSE)
 }
 \arguments{
 \item{gs}{A list containing \code{$specScore}, \code{$postClustProb} and
@@ -15,6 +16,8 @@ write.files(gs, prefix = "genesorteROuts", markers = NULL)
 
 \item{markers}{Additionally, output files restricted to these genes. A
 character vector.}
+
+\item{eachCluster}{Also write individual files for each cluster?}
 }
 \description{
 write.files saves gene-cluster sorting information obtained from
@@ -25,13 +28,15 @@ Three files will be saved to disk, including the specificity score matrix,
 the posterior cluster probability given the gene and the conditional
 probability of observing the gene in a cluster. If \code{markers} is not
 NULL, three additional files will be created and indicated with "_markers" in
-their name.
+their name. If \code{eachCluster} is \code{TRUE}, additional files (one per 
+cluster will be written which includes all genes and their scaled specificity
+score for each cluster, with genes sorted by their score.
 }
 \examples{
 data(sim)
 sg = sortGenes(sim$exp, sim$cellType)
 \dontrun{write.files(sg)} #write all files for all genes.
-\dontrun{write.files(sg, markers = c("g1","g2"))} #additionally write files that are restricted to g1 and g2.
+\dontrun{write.files(sg, markers = c("g1","g2"))} #additionally write files that are restricted to genes g1 and g2.
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>
