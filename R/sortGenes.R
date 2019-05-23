@@ -72,8 +72,14 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
 	classLabels = as.factor(classLabels)
 	if (length(setdiff(levels(classLabels), classLabels)) > 0) {
 		classLabels = classLabels[,drop = TRUE] #drop nonoccuring levels
-		warning("A Friendly Warning: The cell type factor had some empty levels. You probably don't need to do anything, but cell types were likely filtered beforehand.")
+		warning("A Friendly Warning: The cell type factor had some empty levels. You probably don't need to do anything. Cell types were likely filtered beforehand.")
 	}
+
+	ww = which(as.vector(table(classLabels)) == 1)	
+	if (length(ww) > 0) {
+		stop("Sorry but that's an error. sortGenes() won't continue. There were some cell types comprised of only one cell. Although technically possible to have this, something is likely off with your cell clustering.")	
+	}
+	
 	classLabelsNum = as.integer(classLabels)
 	classLabelsLab = levels(classLabels)
 
@@ -84,7 +90,7 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
 	rem = which((Matrix::rowSums(xbin$mat)) == 0)
 	if (length(rem) > 0) {
 		xbin$mat = xbin$mat[-rem,]
-		warning("A Friendly Warning: Some genes were removed because they were zeros in all cells after binarization. You probably don't need to do anything but if your favorite gene is gone you might want to look into this. Maybe you forgot to pre-filter the genes? You can also use a different binarization method. Excluded genes are available in the output under '$removed'.")
+		warning("A Friendly Warning: Some genes were removed because they were zeros in all cells after binarization. You probably don't need to do anything but you might want to look into this. Maybe you forgot to pre-filter the genes? You can also use a different binarization method. Excluded genes are available in the output under '$removed'.")
 	}
 
 	classProb = getClassProb(classLabelsNum)

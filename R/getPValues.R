@@ -68,11 +68,7 @@ getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, s
 
   #getting pvalues
   if (is.null(testGenes)) {
-    if (cores == 1) {
-      pval = 1 - (do.call(cbind, lapply( 1:ngroup, function(k) sapply( 1:ngene, function(j) ee(gs$specScore[j,k]), USE.NAMES = FALSE) ) ))
-    } else {
-      pval = 1 - (do.call(cbind, mclapply( 1:ngroup, function(k) sapply( 1:ngene, function(j) ee(gs$specScore[j,k]), USE.NAMES = FALSE ), mc.cores = cores ) ))
-    }
+      pval = 1 - ( matrix(ee(as.matrix(gs$specScore)), ncol = ncol(gs$specScore), byrow = FALSE) )
 
     if (cores == 1) {
       padj = do.call(rbind, lapply(1:ngene, function(k) p.adjust(pval[k,], method = correctMethod)))
