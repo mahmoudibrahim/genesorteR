@@ -59,7 +59,7 @@
 #' plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,1,2))
 #'
 #' #average every 4 cells to make a less intense heatmap
-#' plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,2,1),
+#' plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,1,2),
 #' averageCells = 4)
 #'
 #' #only cluster genes, do not make plots
@@ -67,9 +67,9 @@
 #' outs=TRUE, plotheat=FALSE)
 plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c("orangered4","orangered","gray90","dodgerblue","dodgerblue4")))(n=100), newOrder = 1:length(unique(classes)), clusterGenes = FALSE, clusterGenesK = length(unique(classes)), averageCells = 0, outs = FALSE, plotheat = TRUE, gaps = TRUE, seed = 10) {
 
-	if (is.character(classes) || is.factor(classes)) {
+	#if (is.character(classes) || is.factor(classes)) {
 		classes = as.integer(as.factor(classes))
-	}
+	#}
 	map = data.frame(oldO = 1:length(unique(classes)), newO = newOrder)
 	classes = map$oldO[match(classes, map$newO)]
 	
@@ -110,7 +110,7 @@ plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c
 	if (clusterGenes) {
 		if (plotheat) {
 			if (gaps) {
-				p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101), gaps_col = cumsum(table(sort(colnames(temp)))), gaps_row =  cumsum(table(sort(kk))), border_color = NA)
+				p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101), gaps_col = cumsum(table(as.integer(colnames(temp)))), gaps_row =  cumsum(table(kk)), border_color = NA)
 			} else {
 				p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101), border_color = NA)
 			}
@@ -121,7 +121,7 @@ plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c
     } else {
 		if (plotheat) {
 			if (gaps) {
-				p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, gaps_col =  cumsum(table(sort(classes))), display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101), border_color = NA)
+				p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101), gaps_col = cumsum(table(as.integer(colnames(temp)))), border_color = NA)
 			} else {
 				p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(-cut,cut,length.out = 101), border_color = NA)
 			}

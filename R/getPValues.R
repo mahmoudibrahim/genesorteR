@@ -80,17 +80,14 @@ getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, s
 
   } else {
     wgene = which(rownames(gs$specScore) %in% testGenes)
-    ngeneT = length(wgene) #give a warning if length is smaller than the length of user argument
+    ngeneT = length(wgene)
     if (ngeneT != length(testGenes)) {
-		message("Some of the genes you specified with 'testGenes' were not found. Were they filtered out by 'sortGenes()?'")
+		warning("Some of the genes you specified with 'testGenes' were not found. Were they filtered out by 'sortGenes()?'")
 	}
     namesT = rownames(gs$specScore)[wgene]
 
-    if (cores == 1) {
-      pval = 1 - (do.call(cbind, lapply( 1:ngroup, function(k) sapply( 1:ngeneT, function(j) ee(gs$specScore[j,k]), USE.NAMES = FALSE ) ) ))
-    } else {
-      pval = 1 - (do.call(cbind, mclapply( 1:ngroup, function(k) sapply( 1:ngeneT, function(j) ee(gs$specScore[j,k]), USE.NAMES = FALSE ), mc.cores = cores ) ))
-    }
+    pval = 1 - ( matrix(ee(as.matrix(gs$specScore[wgene,])), ncol = ncol(gs$specScore), byrow = FALSE) )
+
 
     if (cores == 1) {
       padj = do.call(rbind, lapply(1:ngeneT, function(k) p.adjust(pval[k,], method = correctMethod)))

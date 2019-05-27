@@ -31,6 +31,8 @@
 #'   length as ncol(x) that represents cell cluster assignments. It will be
 #'   coerced to a factor whose levels are the cell cluster names.
 #' @param binarizeMethod Either "median" (default) or "naive". See Details.
+#' @param returnInput Return the input matrix and cell classes? \code{TRUE} by 
+#' default.
 #' @param cores A number greater than zero (1 by default) that indicates how
 #'   many cores to use for parallelization using mclapply.
 #' @return \code{sortGenes} returns a list with the following components:
@@ -67,7 +69,7 @@
 #'
 #' #naive binarization keeps any non-zero input in the input matrix
 #' sg_naive = sortGenes(exp, classLab, binarizeMethod = "naive")
-sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
+sortGenes = function(x, classLabels, binarizeMethod = "median", returnInput = TRUE, cores = 1) {
 	
 	classLabels = as.factor(classLabels)
 	if (length(setdiff(levels(classLabels), classLabels)) > 0) {
@@ -77,7 +79,7 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
 
 	ww = which(as.vector(table(classLabels)) == 1)	
 	if (length(ww) > 0) {
-		stop("Sorry but that's an error. sortGenes() won't continue. There were some cell types comprised of only one cell. Although technically possible to have this, something is likely off with your cell clustering.")	
+		stop("Sorry but that's an error. sortGenes() won't continue. There were some cell types comprised of only one cell. Although it's technically possible to have this, something is likely off with your cell clustering.")	
 	}
 	
 	classLabelsNum = as.integer(classLabels)
@@ -102,6 +104,9 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", cores = 1) {
 	clusterPostGene = getClusterPostGene(condGeneCluster, geneProb, classProb)
 	specScore = getSpecScore(clusterPostGene, condGeneCluster)
 
-	return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, inputMat = x, inputClass = classLabels))
-
+	if (returnInput) {
+		return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, inputMat = x, inputClass = classLabels))
+	} else {
+		return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb))
+	}
 }
