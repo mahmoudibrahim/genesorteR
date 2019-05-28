@@ -141,12 +141,10 @@ getPerma = function(gs, subsetCells = NULL, cores = 1) {
 }
 
 #return area under the curve
-getAUC = function(x, y) {
-
-	dX = c(diff(x), 0)
-	dY = c(diff(y), 0)
-	return(sum(x * dY) + sum(dX * dY)/2)
-
+fastAUC = function(x, y) {
+	da = ( (sum( (y - x) )) / length(x) ) * 2
+	#da = sum(x*c(y[-1],y[1]) - c(x[-1],x[1])*y)/2 
+	return(da)
 }
 
 #bin means of a vector, thanks to the mysterious user on stackoverflow: https://stackoverflow.com/a/43635971/2435654
