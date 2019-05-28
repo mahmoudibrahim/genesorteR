@@ -10,13 +10,15 @@
 #' this value in my subjective experience. 
 #'
 #' By default, the heatmap plots every single cell in one column, this might
-#' take forever if you have a lot of cells (would say >10k) or a slow computer
-#' or it can crash when you do not have enough RAM. If so, it might be good to 
-#' set \code{averageCells} to \code{n} where \code{n} is the number of cells you 
+#' take forever if you have a lot of cells (would say >10k) or it can crash when 
+#' you do not have enough RAM. If so, it might be good to set \code{averageCells} 
+#' to \code{n} where \code{n} is the number of cells you 
 #' want to average. For example, if \code{averageCells = 10} every 10 cells will 
 #' be averaged (without averaging across cell clusters) before plotting the heatmap.
-#' if \code{averageCells =< 1}, no averaging happens. Hint: If you want one column 
-#' per cell cluster, set \code{averageCells} to a very high number.
+#' if \code{averageCells =< 1}, no averaging happens. Hints: (1) If you want one column 
+#' per cell cluster, set \code{averageCells} to a very high number. (2) Gene clustering
+#' occurs after cell averaging, so it might be useful if the gene clusters you get
+#' do not make much sense.
 #'
 #' @param exp A matrix of expression values. Typically the one supplied to
 #'   \code{sortGenes}.
@@ -28,8 +30,8 @@
 #' @param clusterGenes Cluster genes before plotting?
 #' @param clusterGenesK How many clusters should genes by clustered into? See
 #'   Details.
-#' @param averageCells Plot averages of cells instead of individual cells. Use 
-#'   you have a large number of genes. See Details.
+#' @param averageCells Plot averages of cells instead of individual cells. You 
+#' use this when you have a large number of cells. See Details.
 #' @param outs Should gene cluster output and pheatmap object be returned? FALSE
 #'   by default.
 #' @param plotheat Should the heatmap be drawn? TRUE by default.
@@ -67,9 +69,7 @@
 #' outs=TRUE, plotheat=FALSE)
 plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c("orangered4","orangered","gray90","dodgerblue","dodgerblue4")))(n=100), newOrder = 1:length(unique(classes)), clusterGenes = FALSE, clusterGenesK = length(unique(classes)), averageCells = 0, outs = FALSE, plotheat = TRUE, gaps = TRUE, seed = 10) {
 
-	#if (is.character(classes) || is.factor(classes)) {
-		classes = as.integer(as.factor(classes))
-	#}
+	classes = as.integer(as.factor(classes))
 	map = data.frame(oldO = 1:length(unique(classes)), newO = newOrder)
 	classes = map$oldO[match(classes, map$newO)]
 	
