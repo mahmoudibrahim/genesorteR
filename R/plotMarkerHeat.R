@@ -79,7 +79,7 @@ plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c
 	temp = temp[order(match(rownames(temp), markers)),] #catch error here? all clusters should be present after marker selection
 
 	classesTemp = classes[order(classes, decreasing = FALSE)]
-	if (averageCells > 0) {
+	if (averageCells > 1) {
 		neh = lapply( 1:length(table(classesTemp)), function(i) rbind(apply(t(as.matrix(temp[,which(classesTemp == i)])), 2, function(x) binMean(x, averageCells))) )
 		
 		nah = unlist(sapply(1:length(neh), function(x) rep(x,nrow(neh[[x]]))))
@@ -132,4 +132,3 @@ plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c
 	}
 
 }
-# ,
