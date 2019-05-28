@@ -27,7 +27,7 @@ See Details.}
 }
 \description{
 getClassAUC implements one way to investigate clustering quality. It processes the
-output of \code{sortGenes} to obtain a curve for each cell cluster of all
+output of \code{sortGenes} to obtain a curve for each cell cluster for all
 gene specificity scores against their ranking in the cluster. The Area Under
 the Curve (AUC) can be used as a measure of clustering quality in terms of the
 possibility to identify cell clusters using a few marker genes. See Details.
@@ -36,7 +36,7 @@ possibility to identify cell clusters using a few marker genes. See Details.
 Given the specificity score for all genes in a certain cell cluster, we can
 assume that a well-separated easily-identified cell cluster will have a
 relatively small number of genes that have a very high specificity score. Top
-marker genes for a cell cluster that is poorly separated from other cell
+marker genes for a  cluster that is poorly separated from other cell
 clusters will have average or low specificity scores. Sorting the genes for
 each cell cluster by their specificity score and plotting the scaled scores
 in order creates a curve that should be far from the diagonal for

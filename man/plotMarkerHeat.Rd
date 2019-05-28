@@ -29,8 +29,8 @@ plotMarkerHeat(exp, classes, markers,
 \item{clusterGenesK}{How many clusters should genes by clustered into? See
 Details.}
 
-\item{averageCells}{Plot averages of cells instead of individual cells. Use 
-you have a large number of genes. See Details.}
+\item{averageCells}{Plot averages of cells instead of individual cells. You 
+use this when you have a large number of cells. See Details.}
 
 \item{outs}{Should gene cluster output and pheatmap object be returned? FALSE
 by default.}
@@ -61,13 +61,15 @@ number of clusters (what does that even mean?) is typically somewhere around
 this value in my subjective experience.
 
 By default, the heatmap plots every single cell in one column, this might
-take forever if you have a lot of cells (would say >10k) or a slow computer
-or it can crash when you do not have enough RAM. If so, it might be good to 
-set \code{averageCells} to \code{n} where \code{n} is the number of cells you 
+take forever if you have a lot of cells (would say >10k) or it can crash when 
+you do not have enough RAM. If so, it might be good to set \code{averageCells} 
+to \code{n} where \code{n} is the number of cells you 
 want to average. For example, if \code{averageCells = 10} every 10 cells will 
 be averaged (without averaging across cell clusters) before plotting the heatmap.
-if \code{averageCells =< 1}, no averaging happens. Hint: If you want one column 
-per cell cluster, set \code{averageCells} to a very high number.
+if \code{averageCells =< 1}, no averaging happens. Hints: (1) If you want one column 
+per cell cluster, set \code{averageCells} to a very high number. (2) Gene clustering
+occurs after cell averaging, so it might be useful if the gene clusters you get
+do not make much sense.
 }
 \examples{
 data(kidneyTabulaMuris)
@@ -85,7 +87,7 @@ pp$gene_class_info #cell clusters
 plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,1,2))
 
 #average every 4 cells to make a less intense heatmap
-plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,2,1),
+plotMarkerHeat(sg$inputMat, sg$inputClass, mm$markers, clusterGenes=TRUE, newOrder = c(3,1,2),
 averageCells = 4)
 
 #only cluster genes, do not make plots

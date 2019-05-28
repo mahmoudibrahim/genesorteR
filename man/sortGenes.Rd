@@ -4,7 +4,8 @@
 \alias{sortGenes}
 \title{sortGenes}
 \usage{
-sortGenes(x, classLabels, binarizeMethod = "median", cores = 1)
+sortGenes(x, classLabels, binarizeMethod = "median",
+  returnInput = TRUE, cores = 1)
 }
 \arguments{
 \item{x}{A numeric (sparse) matrix. It will be coerced to a dgCMatrix sparse
@@ -15,6 +16,9 @@ length as ncol(x) that represents cell cluster assignments. It will be
 coerced to a factor whose levels are the cell cluster names.}
 
 \item{binarizeMethod}{Either "median" (default) or "naive". See Details.}
+
+\item{returnInput}{Return the input matrix and cell classes? \code{TRUE} by 
+default.}
 
 \item{cores}{A number greater than zero (1 by default) that indicates how
 many cores to use for parallelization using mclapply.}

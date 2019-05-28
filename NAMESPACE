@@ -3,6 +3,7 @@ export(getMarkers)
 export(getPValues)
 export(plotCorrelationHeat)
 export(plotMarkerHeat)
+export(plotTopMarkerHeat)
 export(plotMarkerScores)
 export(sortGenes)
 
