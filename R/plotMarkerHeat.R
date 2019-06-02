@@ -16,9 +16,10 @@
 #' want to average. For example, if \code{averageCells = 10} every 10 cells will 
 #' be averaged (without averaging across cell clusters) before plotting the heatmap.
 #' if \code{averageCells =< 1}, no averaging happens. Hints: (1) If you want one column 
-#' per cell cluster, set \code{averageCells} to a very high number. (2) Gene clustering
-#' occurs after cell averaging, so it might be useful if the gene clusters you get
-#' do not make much sense.
+#' per cell cluster, set \code{averageCells} to a very high number (larger than the 
+#' number of cells in the biggest cluster). (2) Gene clustering occurs after cell 
+#' averaging, so it might be useful if the gene clusters you get do not make much sense
+#' without averaging (averaging will smooth out zeros).
 #'
 #' @param exp A matrix of expression values. Typically the one supplied to
 #'   \code{sortGenes}.

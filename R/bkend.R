@@ -6,7 +6,7 @@ binarize = function(x, method = "median") {
 	} else if (method == "naive") {
 		pi = min(x@x)
 	} else {
-		#todo: issue an error
+		stop("Unrecognized binarization method! genesorteR stopped.")
 	}
 
 

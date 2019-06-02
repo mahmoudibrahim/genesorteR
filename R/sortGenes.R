@@ -6,7 +6,7 @@
 #' cluster.
 #'
 #' When \code{binarizeMethod} is "median", expression matrix binarization is
-#' done by estimating a cutoff value uniformally on all values in the matrix.
+#' done by estimating a cutoff value uniformly on all values in the matrix.
 #' This is equal to the median of all non-zero entries in the matrix and is
 #' returned in \code{cutoff}. When binarizeMethod is "naive", all non-zero
 #' entries are kept and the minimum value of non-zero entries is returned in

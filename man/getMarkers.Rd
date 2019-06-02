@@ -37,9 +37,7 @@ returned for each cluster. See Details. \code{FALSE} by default.}
 }
 \description{
 getMarkers processes the output of \code{sortGenes} to select a relatively
-small set of marker genes. It can also return the mutual information between
-each gene and cell clusters, as well as a Cluster Shannon Index, indicating
-how well separated cell clusters are from each other.
+small set of marker genes.
 }
 \details{
 getMarkers relies on calculating an entropy-like metric (called here Shannon
@@ -55,10 +53,12 @@ score for each cluster is done to try to guarantee that markers for each
 cluster will eventually be selected even if the cluster is not absolutely
 well separated.
 
-Cluster separation is represented by a cluster Shannon Index calculated on
-the scaled specificity score of selected marker genes for each cluster. The
-intuition is that, when restricted to top marker genes, well-defined clusters
-will have few high scoring genes (lower Shannon Index).
+It can also return the mutual information between each gene and cell clusters, 
+as well as a Cluster Shannon Index, indicating how well separated cell clusters are 
+from each other.
+Cluster Shannon Index is calculated on the scaled specificity score of selected 
+marker genes for each cluster. The intuition is that, when restricted to top marker genes, 
+well-defined clusters will have few high scoring genes (lower Shannon Index).
 }
 \examples{
 #randomly generated cell clusters, almost no markers are found
