@@ -5,7 +5,7 @@ genesorteR: Feature Ranking for Single Cell Data
 
 **genesorteR is relatively quick, just seconds for 100k cells, few minutes for millions of cells. Read more [in genesorteR's pre-print](coming soon...).** 
 
-JAMM was developed at the RWTH Aachen University Hospital.
+genesorteR was developed at the RWTH Aachen University Hospital.
 
 If you have questions or need help running genesorteR please email us at [this email](http://scr.im/jammpro), we will be happy to help you. For bugs or feature requests, please post [here](https://github.com/mahmoudibrahim/genesorteR/issues).
 
