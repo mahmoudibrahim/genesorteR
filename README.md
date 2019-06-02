@@ -55,7 +55,7 @@ Latest News and Updates
 genesorteR Documentation
 ------
 
-Here is the [PDF manual for genesorteR](https://github.com/mahmoudibrahim/genesorteR/genesorteR.pdf). 
+Here is the [PDF manual for genesorteR](https://github.com/mahmoudibrahim/genesorteR/blob/master/genesorteR.pdf). 
 
 You can of course also access the documentation of each function like so `?sortGenes`.
 
