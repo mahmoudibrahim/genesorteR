@@ -1,7 +1,7 @@
 genesorteR: Feature Ranking for Single Cell Data
 ======
 
-**genesorteR is an R package for single cell data analysis. It calculate a specificity score to rank all genes in each cluster in the single cell data. It can then use this ranking to find sets of marker genes or to find highly variable genes.** 
+**genesorteR is an R package for single cell data analysis. It calculate a specificity score to rank all genes in each cell cluster. It can then use this ranking to find sets of marker genes or to find highly variable genes.** 
 
 **genesorteR is relatively quick, just seconds for 100k cells, few minutes for millions of cells. Read more [in genesorteR's pre-print](coming soon...).** 
 
@@ -27,6 +27,8 @@ Quick Tutorial
 ------
 
 ```R
+library(genesorteR)
+
 data(kidneyTabulaMuris) #three cell types from kidney (Tabula Muris data)
 
 #get specificity scores for each cell type
