@@ -1,3 +1,9 @@
+#rescale a vector so that the highest value is 1 and lowest is 0
+score = function(x) {
+	x  = ((x-min(x))/(max(x)-min(x)))
+	return(x)
+}
+
 #binarize a gene expression matrix
 binarize = function(x, method = "median") {
 
@@ -89,6 +95,19 @@ getSpecScore = function(postMat, condMat) {
 
 }
 
+
+#get scaled gene-cluster specificity score
+getScaledSpecScore = function(postMat, condMat) {
+
+	specScore = postMat * condMat
+	specScore = apply(specScore, 2, score)
+	
+	colnames(specScore) = colnames(condMat)
+	specScore = as(specScore, "dgCMatrix")
+	return(specScore)
+
+}
+
 #get entropy of a probability vector
 getEntropy = function(x) {
 	ent = 0
@@ -117,12 +136,6 @@ getMutInfo = function(x, y) {
 	return(mutInfo)
 }
 
-#rescale a vector so that the highest value is 1 and lowest is 0
-score = function(x) {
-	x  = ((x-min(x))/(max(x)-min(x)))
-	return(x)
-}
-
 #perform permutations
 getPerma = function(gs, subsetCells = NULL, cores = 1) {
 
@@ -143,7 +156,6 @@ getPerma = function(gs, subsetCells = NULL, cores = 1) {
 #return area under the curve
 fastAUC = function(x, y) {
 	da = ( (sum( (y - x) )) / length(x) ) * 2
-	#da = sum(x*c(y[-1],y[1]) - c(x[-1],x[1])*y)/2 
 	return(da)
 }
 

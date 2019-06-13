@@ -48,59 +48,63 @@
 #' markers = names(which(apply(pp$adjpval, 1, function(x) any(x < 0.01))))
 getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, subsetCells = NULL, cores = 1, seed = 111) {
 
-  ngroup = ncol(gs$specScore)
-  ngene = nrow(gs$specScore)
-  mm = Matrix::sparseMatrix(1, 1, dims = c(ngene, (ngroup * numPerm)))
-  mm = mm * 1
-  dd1L = rep(0, length = numPerm)
+	ngroup = ncol(gs$specScore)
+	ngene = nrow(gs$specScore)
+	mm = Matrix::sparseMatrix(1, 1, dims = c(ngene, (ngroup * numPerm)))
+	mm = mm * 1
+	dd1L = rep(0, length = numPerm)
 
-  #permutation
-  set.seed(seed)
-  for (i in 1:numPerm) {
-    dd1 = (ngroup * i) - (ngroup - 1)
-    dd2 = (ngroup * i)
-    mm[,dd1:dd2] = getPerma(gs, subsetCells = subsetCells, cores = cores)
-    dd1L[i] = dd1
-  }
-  rownames(mm) = rownames(gs$specScore)
-  ee = ecdf(as.vector(mm))
-
-
-  #getting pvalues
-  if (is.null(testGenes)) {
-      pval = 1 - ( matrix(ee(as.matrix(gs$specScore)), ncol = ncol(gs$specScore), byrow = FALSE) )
-
-    if (cores == 1) {
-      padj = do.call(rbind, lapply(1:ngene, function(k) p.adjust(pval[k,], method = correctMethod)))
-    } else {
-      padj = do.call(rbind, mclapply(1:ngene, function(k) p.adjust(pval[k,], method = correctMethod), mc.cores = cores))
-    }
-    rownames(padj) = rownames(gs$specScore)
-    rownames(pval) = rownames(gs$specScore)
-
-  } else {
-    wgene = which(rownames(gs$specScore) %in% testGenes)
-    ngeneT = length(wgene)
-    if (ngeneT != length(testGenes)) {
-		warning("Some of the genes you specified with 'testGenes' were not found. Were they filtered out by 'sortGenes()?'")
+	#permutation
+	set.seed(seed)
+	for (i in 1:numPerm) {
+		dd1 = (ngroup * i) - (ngroup - 1)
+		dd2 = (ngroup * i)
+		mm[,dd1:dd2] = getPerma(gs, subsetCells = subsetCells, cores = cores)
+		dd1L[i] = dd1
 	}
-    namesT = rownames(gs$specScore)[wgene]
+	rownames(mm) = rownames(gs$specScore)
+	ee = ecdf(as.vector(mm@x))
+	nn = length(as.vector(mm@x))
 
-    pval = 1 - ( matrix(ee(as.matrix(gs$specScore[wgene,])), ncol = ncol(gs$specScore), byrow = FALSE) )
+	#getting pvalues
+	if (is.null(testGenes)) {
+		pval = matrix(ee(as.matrix(gs$specScore)), ncol = ncol(gs$specScore), byrow = FALSE) * nn
+		pval = nn - pval
+		pval = (pval + 1) / (nn + 1)
+	
+		if (cores == 1) {
+			padj = do.call(rbind, lapply(1:ngene, function(k) p.adjust(pval[k,], method = correctMethod)))
+		} else {
+			padj = do.call(rbind, mclapply(1:ngene, function(k) p.adjust(pval[k,], method = correctMethod), mc.cores = cores))
+		}
+		rownames(padj) = rownames(gs$specScore)
+		rownames(pval) = rownames(gs$specScore)
+
+	} else {
+		wgene = which(rownames(gs$specScore) %in% testGenes)
+		ngeneT = length(wgene)
+		if (ngeneT != length(testGenes)) {
+			warning("Some of the genes you specified with 'testGenes' were not found. Were they filtered out by 'sortGenes()?'")
+		}
+		namesT = rownames(gs$specScore)[wgene]
+
+		pval = matrix(ee(as.matrix(gs$specScore[wgene,])), ncol = ncol(gs$specScore), byrow = FALSE) * nn
+		pval = nn - pval
+		pval = (pval + 1) / (nn + 1)
 
 
-    if (cores == 1) {
-      padj = do.call(rbind, lapply(1:ngeneT, function(k) p.adjust(pval[k,], method = correctMethod)))
-    } else {
-      padj = do.call(rbind, mclapply(1:ngeneT, function(k) p.adjust(pval[k,], method = correctMethod), mc.cores = cores))
-    }
-    rownames(padj) = namesT
-    rownames(pval) = namesT
-  }
+		if (cores == 1) {
+			padj = do.call(rbind, lapply(1:ngeneT, function(k) p.adjust(pval[k,], method = correctMethod)))
+		} else {
+		padj = do.call(rbind, mclapply(1:ngeneT, function(k) p.adjust(pval[k,], method = correctMethod), mc.cores = cores))
+		}
+		rownames(padj) = namesT
+		rownames(pval) = namesT
+	}
 
-  colnames(padj) = colnames(gs$specScore)
-  colnames(pval) = colnames(gs$specScore)
-  colnames(mm) = rep(colnames(gs$specScore), numPerm)
-  return(list(permuteVal = mm, startIndeces = dd1L, pval = pval, adjpval = padj))
+	colnames(padj) = colnames(gs$specScore)
+	colnames(pval) = colnames(gs$specScore)
+	colnames(mm) = rep(colnames(gs$specScore), numPerm)
+	return(list(permuteVal = mm, startIndeces = dd1L, pval = pval, adjpval = padj))
 
 }
