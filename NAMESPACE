@@ -6,6 +6,7 @@ export(plotMarkerHeat)
 export(plotTopMarkerHeat)
 export(plotMarkerScores)
 export(sortGenes)
+export(write.files)
 
 importFrom("grDevices", "colorRampPalette")
 importFrom("graphics", "legend", "lines", "par", "plot")
