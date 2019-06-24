@@ -48,10 +48,25 @@ pp$gene_class_info #gene clusters
 Also check out the examples in each function's documentation. Vignettes coming soon.
 
 
+Fits with Seurat?
+------
+
+Yes it does!
+
+```R
+#if "seuratObject" is the Seurat object that contains your data, this should work:
+gs = sortGenes(seuratObject@assays$RNA@data, Idents(seuratObject))
+```
+
+Also check out the examples in each function's documentation. Vignettes coming soon.
+
+
+
 Latest News and Updates
 ------
 
-* **June 2 2019:** *genesorteR's first release, v0.1.4
+* **June 24 2019:** new release, v0.2.0. Please check release notes.
+* **June 2 2019:** genesorteR's first release, v0.1.4.
 
 
 genesorteR Documentation
