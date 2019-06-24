@@ -11,6 +11,8 @@ binarize = function(x, method = "median") {
 		pi = median(x@x)
 	} else if (method == "naive") {
 		pi = min(x@x)
+	} else if ((is.numeric(method)) & (method >= 0)) {
+		pi = method
 	} else {
 		stop("Unrecognized binarization method! genesorteR stopped.")
 	}
