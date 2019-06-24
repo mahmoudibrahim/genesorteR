@@ -54,11 +54,9 @@ Fits with Seurat?
 Yes it does!
 
 ```R
-#if "seuratObject" is the Seurat object that contains your data, this should work:
+#if "seuratObject" is the Seurat object that contains your data, I think this should work:
 gs = sortGenes(seuratObject@assays$RNA@data, Idents(seuratObject))
 ```
-
-Also check out the examples in each function's documentation. Vignettes coming soon.
 
 
 
