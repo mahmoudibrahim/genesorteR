@@ -10,7 +10,8 @@
 #' @param corMethod Correlation method, will passed to \code{method} in the
 #'   function \code{cor}.
 #' @param colors Color palette for drawing the heatmap
-#' @param outs Should the \code{pheatmap} object be returned? FALSE by default.
+#' @param outs Should the \code{pheatmap} object and correlation matrix be 
+#' returned? FALSE by default.
 #' @param displayNumbers Should correlation values be displayed on the heatmap?
 #'   TRUE by default.
 #' @return If \code{outs} is TRUE, the pheatmap object will be returned.
@@ -41,7 +42,7 @@ plotCorrelationHeat = function(gs, markers = NULL, corMethod = "pearson", colors
   p=pheatmap(cc, breaks = seq(-1,1,length.out = 99), show_rownames=T, show_colnames=T, display_numbers=displayNumbers, color = colors)
 
   if (outs) {
-    return(p)
+    return(list(pheat = p, corr = cc))
   }
 
 }
