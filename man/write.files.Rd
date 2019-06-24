@@ -8,9 +8,7 @@ write.files(gs, prefix = "genesorteROuts", markers = NULL,
   eachCluster = FALSE)
 }
 \arguments{
-\item{gs}{A list containing \code{$specScore}, \code{$postClustProb} and
-\code{$specScore} sparse matrices. Typically the output of
-\code{sortGenes()}.}
+\item{gs}{The output of \code{sortGenes()}.}
 
 \item{prefix}{The prefix for saving the files.}
 
@@ -34,9 +32,9 @@ score for each cluster, with genes sorted by their score.
 }
 \examples{
 data(sim)
-sg = sortGenes(sim$exp, sim$cellType)
-\dontrun{write.files(sg)} #write all files for all genes.
-\dontrun{write.files(sg, markers = c("g1","g2"))} #additionally write files that are restricted to genes g1 and g2.
+gs = sortGenes(sim$exp, sim$cellType)
+\dontrun{write.files(gs)} #write all files for all genes.
+\dontrun{write.files(gs, markers = c("g1","g2"))} #additionally write files that are restricted to genes g1 and g2.
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

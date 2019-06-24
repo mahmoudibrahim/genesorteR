@@ -15,24 +15,25 @@ matrix. Rows represent genes, columns represent cells.}
 length as ncol(x) that represents cell cluster assignments. It will be
 coerced to a factor whose levels are the cell cluster names.}
 
-\item{binarizeMethod}{Either "median" (default) or "naive". See Details.}
+\item{binarizeMethod}{Either "median" (default) or "naive" or a numeric cutoff. 
+See Details.}
 
 \item{returnInput}{Return the input matrix and cell classes? \code{TRUE} by 
-default.}
+default. See Details.}
 
-\item{cores}{A number greater than zero (1 by default) that indicates how
+\item{cores}{An integer greater than zero (1 by default) that indicates how
 many cores to use for parallelization using mclapply.}
 }
 \value{
 \code{sortGenes} returns a list with the following components:
   \item{binary}{The binarized gene expression matrix. A sparse matrix of
-  class dgCMatrix of the same size as "x".} \item{cutoff}{The cutoff value
+  class dgCMatrix.} \item{cutoff}{The cutoff value
   used to binarize the gene expression matrix. Anything lower than this value
   was set to zero.} \item{removed}{A numeric vector containing the row
   indeces of genes that were removed because they were not expressed in any
-  cells. If none were removed, this will be \code{NULL}.} \item{geneProb}{A
-  numeric vector whose length is equal to nrow(binary) that lists the
-  fraction of cells in which a gene was detected.} \item{condGeneProb}{A
+  cells after binarization. If none were removed, this will be \code{NULL}.} 
+  \item{geneProb}{A numeric vector whose length is equal to nrow(binary) that 
+  lists the fraction of cells in which a gene was detected.} \item{condGeneProb}{A
   sparse matrix of class dgCMatrix with as many rows as nrow(binary) and as
   many columns as the number of cell clusters. It includes the conditional
   probability of observing a gene in a cluster.} \item{postClustProb}{A
@@ -51,7 +52,8 @@ many cores to use for parallelization using mclapply.}
 sortGenes is the main function of the genesorteR package. It takes a gene
 expression matrix and cell cluster assignments. It binarizes the expression
 matrix and calculates empirical statistics on gene expression in each
-cluster.
+cluster including a specificity score that can be used to rank genes in cell
+clusters.
 }
 \details{
 When \code{binarizeMethod} is "median", expression matrix binarization is
@@ -59,32 +61,42 @@ done by estimating a cutoff value uniformly on all values in the matrix.
 This is equal to the median of all non-zero entries in the matrix and is
 returned in \code{cutoff}. When binarizeMethod is "naive", all non-zero
 entries are kept and the minimum value of non-zero entries is returned in
-\code{cutoff}. When the input matrix \code{x} has already been binarized, set
-\code{binarizeMethod} to "naive".
+\code{cutoff}. When the input matrix \code{x} has already been binarized, 
+set \code{binarizeMethod} to "naive". You can set a specific cutoff value 
+for binarization, by setting \code{binarizeMethod} to a numeric value >= 0.
 
-The specificity score matrix \code{specScore} is calculated as
-\code{condGeneProb * postClustProb}. Therefore, it simply balances the
-posterior probability of observing a cell cluster given the gene
-(gene-cluster specificity) with its conditional probability given the cluster
-(a measure of gene expression). This ensures that highly specific genes are
-also highly expressed. The \code{specScore} matrix is considered the main
-output of this function, and on which many of the remaining calculations by
-other functions in the \code{genesorteR} package are performed. The values in
-this matrix can be used to rank features (genes in scRNA-Seq) in clusters.
+The specificity scores balance the posterior probability of observing a cell
+ cluster given the gene (gene-cluster specificity) with its conditional 
+probability given the cluster (a measure of gene expression). This ensures 
+that highly specific genes are also highly expressed. The \code{specScore} 
+matrix is considered the main output of this function, and on which many of the
+remaining calculations by other functions in the \code{genesorteR} package 
+are performed. The values in this matrix can be used to rank features 
+(genes in scRNA-Seq) in clusters.
+
+Note that if returnInput is set to FALSE (input expression matrix will no be
+returned in the output), many of the other functions that accept the output of
+\code{sortGenes} will break.
 
 \code{sortGenes} can in principle be applied to both a raw count matrix or a
 normalized log-count expression matrix.
 }
 \examples{
+data(kidneyTabulaMuris)
 #basic functionality
-set.seed(1234)
-exp = matrix(sample(0:20,1000,replace=TRUE), ncol = 20)
-rownames(exp) = sapply(1:50, function(x) paste0("g", x))
-classLab = sample(c("cell type 1","cell type 2"),20,replace=TRUE)
-sg = sortGenes(exp, classLab)
+gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+
+#the top 10 genes for each cluster by specificity scores
+top_genes = apply(gs$specScore, 2, function(x) names(head(sort(x, decreasing = TRUE), n = 10)))
+
+#the same top 10 genes but using the plotTopMarkerHeat function
+plotTopMarkerHeat(gs, top_n = 10, outs = TRUE, plotheat = FALSE)
 
 #naive binarization keeps any non-zero input in the input matrix
-sg_naive = sortGenes(exp, classLab, binarizeMethod = "naive")
+gs_naive = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType, binarizeMethod = "naive")
+
+#different genes?
+plotTopMarkerHeat(gs_naive, top_n = 10, outs=TRUE, plotheat=FALSE)
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

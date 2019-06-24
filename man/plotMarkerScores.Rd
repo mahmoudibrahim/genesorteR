@@ -8,9 +8,9 @@ plotMarkerScores(mm, gs, markers = mm$markers, colors = c("#99999920",
   "orangered4"))
 }
 \arguments{
-\item{mm}{A list. The output of \code{getMarkers}}
+\item{mm}{The output of \code{getMarkers}}
 
-\item{gs}{A list. The output of \code{sortGenes}}
+\item{gs}{The output of \code{sortGenes}}
 
 \item{markers}{A character vector containing the genes to highlight in the
 scatter plot.}
@@ -23,9 +23,9 @@ specificity Shannon index to investigate \code{getMarkers} results.
 }
 \examples{
 data(kidneyTabulaMuris)
-sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
-mm = getMarkers(sg,quant=0.99)
-plotMarkerScores(mm, sg)
+gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+mm = getMarkers(gs,quant=0.99)
+plotMarkerScores(mm, gs)
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

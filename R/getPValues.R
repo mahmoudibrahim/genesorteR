@@ -4,14 +4,14 @@
 #' score to obtain a p-value value on each gene-cell type specificity score. The
 #' permutation keeps everything the same except that cell type assignments are
 #' permuted between the cells (but note that cell type proportions are also kept
-#' the same). This function can be a way to select all differentially expressed
-#' genes between all cell classes globally in a dataset in one go, but it can
-#' also perform "differential expression" locally between two cell types.
+#' the same). This function is a way to select all differentially expressed
+#' genes between all cell classes globally in a dataset in one go or to define 
+#' differentially expressed genes in a specific cell cluster.
 #'
-#' @param gs A list, typically the output of \code{sortGenes()}.
+#' @param gs The output of \code{sortGenes()}.
 #' @param numPerm The number of permutations to do. The default value 5 is to
-#'   ensure reasonable running time for large datasets but might be advisable to
-#'   increase it in many cases.
+#'   ensure quick running time for very large datasets but can be increased to
+#'   increase the power of the permutation test, see Details.
 #' @param correctMethod The method used to correct p-values for multiple
 #'   hypothesis testing. Any valid input to "method" in \code{p.adjust} is
 #'   allowed. p-value correction is done on a gene-by-gene basis.
@@ -22,7 +22,7 @@
 #'   one cell from each of the cell clusters contained in \code{$specScore}.
 #'   Note this option is still experimental and might not give consistent
 #'   results.
-#' @param cores A number greater than zero (1 by default) that indicates how
+#' @param cores An integer greater than zero (1 by default) that indicates how
 #'   many cores to use for parallelization using mclapply.
 #' @param seed The seed for random permutations.
 #'
@@ -34,18 +34,20 @@
 #'   that indicates the starting column for each performed permutation in
 #'   \code{permuteVal}} \item{pval}{A matrix with as many rows as genes and
 #'   columns as \code{ncol($specScore)}, containing the p-values for the null
-#'   hypothesis that the gene is equally specific to all cell clusters is true.}
+#'   hypothesis that the gene is not highly specific to a cell cluster is true.}
 #'   \item{adjpval}{A matrix with the same size as \code{pval}, containing the
 #'   corrected p-values using the method specified in \code{correctMethod}}
 #' @export
 #' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @examples
-#' data(sim)
-#' sg = sortGenes(sim$exp, sim$cellType)
-#' pp = getPValues(sg)
-#'
+#' data(kidneyTabulaMuris)
+#' gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+#' pp = getPValues(gs)
 #' #obtain genes that are "differentially expressed" in at least one cluster
 #' markers = names(which(apply(pp$adjpval, 1, function(x) any(x < 0.01))))
+#'
+#' @seealso
+#' getMarkers
 getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, subsetCells = NULL, cores = 1, seed = 111) {
 
 	ngroup = ncol(gs$specScore)

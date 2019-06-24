@@ -11,9 +11,7 @@
 #' cluster will be written which includes all genes and their scaled specificity
 #' score for each cluster, with genes sorted by their score.
 #'
-#' @param gs A list containing \code{$specScore}, \code{$postClustProb} and
-#'   \code{$specScore} sparse matrices. Typically the output of
-#'   \code{sortGenes()}.
+#' @param gs The output of \code{sortGenes()}.
 #' @param prefix The prefix for saving the files.
 #' @param markers Additionally, output files restricted to these genes. A
 #'   character vector.
@@ -22,9 +20,9 @@
 #'
 #' @examples
 #' data(sim)
-#' sg = sortGenes(sim$exp, sim$cellType)
-#' \dontrun{write.files(sg)} #write all files for all genes.
-#' \dontrun{write.files(sg, markers = c("g1","g2"))} #additionally write files that are restricted to genes g1 and g2.
+#' gs = sortGenes(sim$exp, sim$cellType)
+#' \dontrun{write.files(gs)} #write all files for all genes.
+#' \dontrun{write.files(gs, markers = c("g1","g2"))} #additionally write files that are restricted to genes g1 and g2.
 write.files = function(gs, prefix = "genesorteROuts", markers = NULL, eachCluster = FALSE) {
 
 	write.table(round(as.matrix(gs$condGeneProb),3), sep = "\t", file = paste0(prefix, "_condProbOfExp.csv"), quote = FALSE)

@@ -30,7 +30,8 @@ TRUE by default.}
 \item{plotheat}{Should the heatmap be drawn? TRUE by default.}
 }
 \value{
-If \code{outs} is TRUE, \code{plotMarkerHeat} returns a list
+If \code{outs} is TRUE, \code{plotMarkerHeat} returns a list containing 
+the top \code{n} marker genes for each cluster.
 }
 \description{
 Plot a heatmap of expression values for the top genes in each cluster, 
@@ -44,8 +45,18 @@ of \code{sortGenes} as the only required input.
 }
 \examples{
 data(kidneyTabulaMuris)
-sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
-plotTopMarkerHeat(sg)
+gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+plotTopMarkerHeat(gs) # plots the top 10 genes for each cluster
+
+#now plot the top 20 genes and average every 5 cells
+plotTopMarkerHeat(gs, top_n= 20, averageCells=5)
+
+#just identify the top 20 genes, do not make a plot
+plotTopMarkerHeat(gs, top_n= 20, averageCells=5, outs = TRUE, plotheat = FALSE)
+
+}
+\seealso{
+plotMarkerHeat
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

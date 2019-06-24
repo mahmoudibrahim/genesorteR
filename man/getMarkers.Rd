@@ -7,15 +7,13 @@
 getMarkers(gs, quant = 0.99, mutualInfo = FALSE, classEnt = FALSE)
 }
 \arguments{
-\item{gs}{A list containing \code{$specScore} sparse matrix, \code{$binary}
-expression sparse matrix and \code{$inputClass} vector. Typically the output of
-\code{sortGenes()}.}
+\item{gs}{The output of \code{sortGenes()}.}
 
-\item{quant}{A number greater than zero and smaller than one. 0.95 by
+\item{quant}{A number greater than zero and smaller than one. 0.99 by
 default. See Details.}
 
 \item{mutualInfo}{Logical. If \code{TRUE}, the mutual information between
-gene expression and cell class will be returned for each gene. \code{FALSE}
+gene expression and cell clustering will be returned for each gene. \code{FALSE}
 by default.}
 
 \item{classEnt}{Logical. If \code{TRUE}, a "Cluster Shannon Index" is
@@ -25,8 +23,8 @@ returned for each cluster. See Details. \code{FALSE} by default.}
 \code{getMarkers} returns a list with the following components:
   \item{markers}{A character vector containing the names of selected marker
   features.} \item{maxScaledSpecScore}{A numeric vector of length
-  \code{nrow(specScore)}, including the maximum scaled specificity score for
-  each gene across all cell clusters.} \item{gene_entropy}{A numeric vector
+  \code{nrow(gs$specScore)}, including the maximum scaled specificity score for
+  each gene across all cell clusters.} \item{gene_shannon_index}{A numeric vector
   of the same length as \code{maxScaledSpecScore}, including the Gene Shannon
   Index for each gene. See Details.} \item{mutInfo}{A numeric vector of the
   same length as \code{maxScaledSpecScore}, including the mutual information
@@ -39,29 +37,8 @@ returned for each cluster. See Details. \code{FALSE} by default.}
 getMarkers processes the output of \code{sortGenes} to select a relatively
 small set of marker genes.
 }
-\details{
-getMarkers relies on calculating an entropy-like metric (called here Shannon
-Index) calculated on the scaled gene-cluster specificity score. The intuition
-is that genes with low entropy are either lowly expressed or highly specific
-to one or few cell clusters. Therefore, we select the top n\% of genes
-according to the scaled specificity score and then cluster those genes based
-on their Shannon Index. \code{n} is controlled by \code{quant}, the default
-value 0.99 means top 1% of genes. Using lower values up to 0.95 may be ok but 
-lower values than 0.95 are not recommended nor necessary. It can be increased
-to 0.999 for example to obtain a smaller set of genes. Scaling the specificity 
-score for each cluster is done to try to guarantee that markers for each 
-cluster will eventually be selected even if the cluster is not absolutely
-well separated.
-
-It can also return the mutual information between each gene and cell clusters, 
-as well as a Cluster Shannon Index, indicating how well separated cell clusters are 
-from each other.
-Cluster Shannon Index is calculated on the scaled specificity score of selected 
-marker genes for each cluster. The intuition is that, when restricted to top marker genes, 
-well-defined clusters will have few high scoring genes (lower Shannon Index).
-}
 \examples{
-#randomly generated cell clusters, almost no markers are found
+#randomly generated data and cell clusters, almost no markers are found
 set.seed(1234)
 exp = matrix(sample(0:20,1000,replace=TRUE), ncol = 20)
 rownames(exp) = sapply(1:50, function(x) paste0("g", x))
@@ -73,18 +50,21 @@ length(mm$markers) #only one marker gene was found
 
 #"reasonably" separated clusters, with a few clear markers
 data(sim)
-sg = sortGenes(sim$exp, sim$cellType)
-mm = getMarkers(sg,quant=0.95)
+gs = sortGenes(sim$exp, sim$cellType)
+mm = getMarkers(gs,quant=0.95)
 length(mm$markers)
 
 #real data with three well separated clusters
 data(kidneyTabulaMuris)
-sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
-mm = getMarkers(sg)
-length(mm$markers) #we found 450 candidate markers
+gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+mm = getMarkers(gs, quant = 0.99)
+length(mm$markers) #we found 109 candidate markers
 #we want to get a more focused list:
-mm = getMarkers(sg, quant = 0.999)
+mm = getMarkers(gs, quant = 0.999)
 length(mm$markers) #11 genes that can alone descriminate between the cell types
+}
+\seealso{
+getPValues
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

@@ -10,8 +10,7 @@ plotCorrelationHeat(gs, markers = NULL, corMethod = "pearson",
   displayNumbers = TRUE)
 }
 \arguments{
-\item{gs}{A list containing \code{$specScore} sparse matrix. Typically, the
-output of \code{sortGenes}.}
+\item{gs}{The output of \code{sortGenes}.}
 
 \item{markers}{Restrict correlation analysis to those genes. A character
 vector.}
@@ -21,29 +20,31 @@ function \code{cor}.}
 
 \item{colors}{Color palette for drawing the heatmap}
 
-\item{outs}{Should the \code{pheatmap} object be returned? FALSE by default.}
+\item{outs}{Should the \code{pheatmap} object and correlation matrix be 
+returned? FALSE by default.}
 
 \item{displayNumbers}{Should correlation values be displayed on the heatmap?
 TRUE by default.}
 }
 \value{
-If \code{outs} is TRUE, the pheatmap object will be returned.
+If \code{outs} is TRUE, the pheatmap object and the correlation matrix will 
+be returned.
 }
 \description{
-\code{plotCorrelationHeat} uses the specificity scores to correlate cell
-clusters with each other and plot a heatmap.
+\code{plotCorrelationHeat} uses the specificity scores returned by \code{sortGenes} to 
+correlate cell clusters with each other and plot a heatmap.
 }
 \examples{
 data(kidneyTabulaMuris)
-sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
-plotCorrelationHeat(sg)
+gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+plotCorrelationHeat(gs)
 
 #user only marker genes and spearman correlation
-mm = getMarkers(sg, quant = 0.95)
-plotCorrelationHeat(sg, markers = mm$markers, corMethod = "spearman")
+mm = getMarkers(gs, quant = 0.95)
+plotCorrelationHeat(gs, markers = mm$markers, corMethod = "spearman")
 
-#do not plot correlation values
-plotCorrelationHeat(sg, markers = mm$markers, corMethod = "spearman", displayNumbers = FALSE)
+#do not write correlation values, useful if there are many cell clusters
+plotCorrelationHeat(gs, markers = mm$markers, corMethod = "spearman", displayNumbers = FALSE)
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>

@@ -20,13 +20,23 @@
 #' TRUE by default.
 #' @param outs Should the top genes names be returned? FALSE by default.
 #' @param plotheat Should the heatmap be drawn? TRUE by default.
-#' @return If \code{outs} is TRUE, \code{plotMarkerHeat} returns a list
+#' @return If \code{outs} is TRUE, \code{plotMarkerHeat} returns a list containing 
+#' the top \code{n} marker genes for each cluster.
 #' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @export
 #' @examples
 #' data(kidneyTabulaMuris)
-#' sg = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
-#' plotTopMarkerHeat(sg)
+#' gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
+#' plotTopMarkerHeat(gs) # plots the top 10 genes for each cluster
+#'
+#' #now plot the top 20 genes and average every 5 cells
+#' plotTopMarkerHeat(gs, top_n= 20, averageCells=5)
+#' 
+#' #just identify the top 20 genes, do not make a plot
+#' plotTopMarkerHeat(gs, top_n= 20, averageCells=5, outs = TRUE, plotheat = FALSE)
+#'
+#' @seealso
+#' plotMarkerHeat
 plotTopMarkerHeat = function(sg, top_n = 10, colors = colorRampPalette(rev(c("orangered4","orangered","gray90","dodgerblue","dodgerblue4")))(n=100), newOrder = 1:length(unique(sg$inputClass)), averageCells = 0, gaps = TRUE, outs = FALSE, plotheat = TRUE) {
 
 	classes = as.integer(as.factor(sg$inputClass))
