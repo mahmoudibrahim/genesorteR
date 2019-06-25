@@ -1,7 +1,7 @@
 Package: genesorteR
 Type: Package
 Title: Feature Ranking in Clustered Single Cell Data
-Version: 0.2.0
+Version: 0.2.1
 Author: Mahmoud M Ibrahim
 Maintainer: Mahmoud M Ibrahim <mmibrahim@pm.me>
 Description: The main purpose of this R extension is to select features in (possibly very large) single cell data including scRNA-Seq and potentially scATAC-Seq.
