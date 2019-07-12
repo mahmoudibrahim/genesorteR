@@ -47,6 +47,8 @@ pp$gene_class_info #gene clusters
 
 Also check out the examples in each function's documentation. Vignettes coming soon.
 
+Note that genesorteR does not currently accept expression matrices with negative entries.
+
 
 Fits with Seurat?
 ------
