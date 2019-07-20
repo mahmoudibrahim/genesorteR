@@ -89,6 +89,10 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", returnInput = TR
 		warning("A Friendly Warning: The cell type factor had some empty levels. You probably don't need to do anything. Cell types were likely filtered beforehand.")
 	}
 
+	if (length(levels(classLabels)) < 2) {
+		stop("Sorry but that's an error. classLabels specifies only one cell cluster!")
+	}	
+
 	ww = which(as.vector(table(classLabels)) == 1)	
 	if (length(ww) > 0) {
 		stop("Sorry but that's an error. sortGenes() won't continue. There were some cell types comprised of only one cell. Although it's technically possible to have this, something is likely off with your cell clustering.")	
