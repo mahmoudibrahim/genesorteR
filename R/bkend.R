@@ -89,7 +89,7 @@ getClusterPostGene = function(condMat, geneProb, classProb) {
 #get gene-cluster specificity score
 getSpecScore = function(postMat, condMat) {
 
-	specScore = postMat * condMat
+	specScore = exp(log(postMat) + log(condMat))
 
 	colnames(specScore) = colnames(condMat)
 	specScore = as(specScore, "dgCMatrix")

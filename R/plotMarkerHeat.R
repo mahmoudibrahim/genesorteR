@@ -77,7 +77,6 @@ plotMarkerHeat = function(exp, classes, markers, colors = colorRampPalette(rev(c
 	map = data.frame(oldO = 1:length(unique(classes)), newO = newOrder)
 	classes = map$oldO[match(classes, map$newO)]
 	
-
 	
 	temp = exp[which(rownames(exp) %in% markers),order(classes, decreasing = FALSE)]
 	temp = temp[order(match(rownames(temp), markers)),] #catch error here? all clusters should be present after marker selection
