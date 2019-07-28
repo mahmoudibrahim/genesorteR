@@ -9,11 +9,15 @@
 #' When \code{binarizeMethod} is "median", expression matrix binarization is
 #' done by estimating a cutoff value uniformly on all values in the matrix.
 #' This is equal to the median of all non-zero entries in the matrix and is
-#' returned in \code{cutoff}. When binarizeMethod is "naive", all non-zero
-#' entries are kept and the minimum value of non-zero entries is returned in
-#' \code{cutoff}. When the input matrix \code{x} has already been binarized, 
-#' set \code{binarizeMethod} to "naive". You can set a specific cutoff value 
-#' for binarization, by setting \code{binarizeMethod} to a numeric value >= 0.
+#' returned in \code{cutoff}. When binarizeMethod is "adaptiveMedian", 
+#' expression values of genes are clustered to obtain groups of genes based 
+#' on expression level, then the "median" method is applied to each group 
+#' separately. This assumes the matrix supplied in \code{x} is log scaled.
+#' When binarizeMethod is "naive", all non-zero entries are kept and the 
+#' minimum value of non-zero entries is returned in \code{cutoff}. When the 
+#' input matrix \code{x} has already been binarized, set \code{binarizeMethod} 
+#' to "naive". You can set a specific cutoff value for binarization, by 
+#' setting \code{binarizeMethod} to a numeric value >= 0.
 #'
 #' The specificity scores balance the posterior probability of observing a cell
 #'  cluster given the gene (gene-cluster specificity) with its conditional 
@@ -35,7 +39,7 @@
 #' @param classLabels A numeric or character vector or a factor of the same
 #'   length as ncol(x) that represents cell cluster assignments. It will be
 #'   coerced to a factor whose levels are the cell cluster names.
-#' @param binarizeMethod Either "median" (default) or "naive" or a numeric cutoff. 
+#' @param binarizeMethod Either "median" (default) or "naive" or "adaptiveMedian" or a numeric cutoff. 
 #' See Details.
 #' @param returnInput Return the input matrix and cell classes? \code{TRUE} by 
 #' default. See Details.

@@ -9,8 +9,20 @@ binarize = function(x, method = "median") {
 
 	if (method == "median") {
 		pi = median(x@x)
+	} else if (method == "mean") {
+		pi = mean(x@x)
 	} else if (method == "naive") {
 		pi = min(x@x)
+	} else if (method == "adaptiveMedian") {
+		mm = Mclust(Matrix::rowSums(x), 1:20, modelNames=c("V"), verbose = FALSE)
+		if (mm$G == 1) {
+			stop("Error: you set binarizeMethod to adaptiveMedian but the optimal number of gene groups based on average expression is 1. Please use a different binarization method or use a different gene expression normalization. Also please consider reporting this error to mmibrahim@pm.me or on https://github.com/mahmoudibrahim/genesorteR/issues (preferred).")
+		} else {
+			pi = rep(0, mm$G)
+			for (i in 1:mm$G) {
+				pi[i] = median(x[which(mm$classification == i),]@x)
+			}
+		}
 	} else if ((is.numeric(method)) & (method >= 0)) {
 		pi = method
 	} else {
@@ -18,19 +30,39 @@ binarize = function(x, method = "median") {
 	}
 
 
-	ww = which(x@x >= pi)
-	dp = diff(x@p)
-	colInd = (rep(seq_along(dp),dp))[ww]
-	rowInd = (x@i+1)[ww]
-	genes = rownames(x)
-	x = Matrix::sparseMatrix(rowInd[1], colInd[1], dims=x@Dim)
-	x[cbind(rowInd,colInd)] = 1
-	x = as(x, "dgCMatrix")
-	rownames(x) = genes
-
+	if (method == "adaptiveMedian") {
+	
+		mat = list()
+		for (i in 1:mm$G) {
+			tx = x[which(mm$classification == i),]
+			ww = which(tx@x >= pi[i])
+			dp = diff(tx@p)
+			colInd = (rep(seq_along(dp),dp))[ww]
+			rowInd = (tx@i+1)[ww]
+			genes = rownames(tx)
+			mat[[i]] = Matrix::sparseMatrix(rowInd[1], colInd[1], dims=tx@Dim)
+			mat[[i]][cbind(rowInd,colInd)] = 1
+			mat[[i]] = as(mat[[i]], "dgCMatrix")
+			rownames(mat[[i]]) = genes
+		}
+		mat = do.call(rbind, mat)
+		x = mat[match(rownames(x),rownames(mat)),]
+	
+	} else {
+	
+		ww = which(x@x >= pi)
+		dp = diff(x@p)
+		colInd = (rep(seq_along(dp),dp))[ww]
+		rowInd = (x@i+1)[ww]
+		genes = rownames(x)
+		x = Matrix::sparseMatrix(rowInd[1], colInd[1], dims=x@Dim)
+		x[cbind(rowInd,colInd)] = 1
+		x = as(x, "dgCMatrix")
+		rownames(x) = genes
+	}
+	
 	return(list(mat = x, cutoff = pi))
 }
-
 
 
 #get prior probability for each gene across the entire data set
