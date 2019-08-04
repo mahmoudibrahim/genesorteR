@@ -50,6 +50,12 @@
 #' getMarkers
 getPValues = function(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL, subsetCells = NULL, cores = 1, seed = 111) {
 
+	#recompute without non-binary genes
+	takeout = which(Matrix::rowSums(gs$binary) == ncol(gs$binary))
+	if (length(takeout) > 0) {
+		gs = sortGenes(gs$binary[-takeout,], gs$inputClass, binarizeMethod = "naive", cores = cores)
+	}
+
 	ngroup = ncol(gs$specScore)
 	ngene = nrow(gs$specScore)
 	mm = Matrix::sparseMatrix(1, 1, dims = c(ngene, (ngroup * numPerm)))
