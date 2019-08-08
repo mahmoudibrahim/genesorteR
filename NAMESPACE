@@ -8,6 +8,7 @@ export(plotBinaryHeat)
 export(plotTopBinaryHeat)
 export(plotMarkerScores)
 export(sortGenes)
+export(getTable)
 export(write.files)
 
 importFrom("grDevices", "colorRampPalette")

@@ -203,3 +203,10 @@ binMean = function (vec, every, na.rm = FALSE) {
 	}
 	return(x)
 }
+
+#getClassIndeces
+getClassIndeces = function(x) {
+	uniq = unique(x)
+	x = lapply(1:length(unique(x)), function(a) which(!is.na(match(x, uniq[a]))))
+	return(x)
+}
