@@ -7,8 +7,8 @@
 #' a fold-change cutoff and a p-value cutoff to determine variable genes.
 #'
 #'
-#' @param sg The output of \code{sortGenes}.
-#' @param mm The output of \code{getPValues}.
+#' @param gs The output of \code{sortGenes}.
+#' @param pp The output of \code{getPValues}.
 #' @param fc_cutoff Default is 0, which means only genes that have an average 
 #' fold-change higher than 0 for a given cluster are reported. Positive and negative 
 #' numbers are allowed. Se to FALSE to switch off filtering on the average fold-change
@@ -32,7 +32,7 @@
 #' tab = getTable(gs, pp)
 #' 
 #' #A quick diagnostic plot (fold change correlates with specificity score)
-#' plot(test$Average.Log.Fold.Change, test$Specificity.Score, col = as.factor(test$Cluster), pch = 20)
+#' plot(tab$Average.Log.Fold.Change, tab$Specificity.Score, col = as.factor(tab$Cluster), pch = 20)
 #'
 #' #all variable genes
 #' unique(rownames(tab))
