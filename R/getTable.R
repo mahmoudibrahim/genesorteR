@@ -1,26 +1,27 @@
 #' getTable
 #'
-#' Summarize \code{sortGenes} and \code{getPValues} results in one table.
+#' Summarize \code{sortGenes} and \code{getPValues} results in one data frame.
 #'
 #' \code{getTable} combines the results of sortGenes and getPValues in one table
 #' and also calculates the average fold-change of expression, allowing to select 
-#' a fold-change cutoff and a p-value cutoffto determine differential expression.
+#' a fold-change cutoff and a p-value cutoff to determine variable genes.
 #'
 #'
 #' @param sg The output of \code{sortGenes}.
 #' @param mm The output of \code{getPValues}.
-#' @param fc_cutoff Default is FALSE which means no fold change cut off is used to 
-#' filter the results. If it is a numeric value, it means only genes that have a 
-#' an average fold-change higher than this number for a given cluster are reported.
-#'
+#' @param fc_cutoff Default is 0, which means only genes that have an average 
+#' fold-change higher than 0 for a given cluster are reported. Positive and negative 
+#' numbers are allowed. Se to FALSE to switch off filtering on the average fold-change
+#' value.
 #' @param adjpval_cutoff A numeric adjusted p-value cutoff value. Default is 0.05.
-#' @param log A logical value. TRUE (default) means the expression matrix supplied 
+#' @param islog A logical value. TRUE (default) means the expression matrix supplied 
 #' previously to \code{sortGenes} is in log space.
 #' @param pseudocount A numeric value. A pseudocount to add to the expression matrix before
-#' taking the log if \code{log} is FALSE. 
+#' taking the log if \code{islog} is FALSE. 
 #'
 #' @return \code{getTable} returns a data frame containing the average log fold change, the adjusted 
-#' p-value and the specificity score for all variable genes in all clusters. 
+#' p-value and the specificity score for all variable genes in each cluster. The data frame is sorted 
+#' by the specificity score. Note that a gene may appear multiple times for multiple clusters.
 #' 
 #' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @export
@@ -29,11 +30,20 @@
 #' gs = sortGenes(kidneyTabulaMuris$exp, kidneyTabulaMuris$cellType)
 #' pp = getPValues(gs)
 #' tab = getTable(gs, pp)
-getTable = function(gs, pp, fc_cutoff = FALSE, adjpval_cutoff = 0.05) {
+#' 
+#' #A quick diagnostic plot (fold change correlates with specificity score)
+#' plot(test$Average.Log.Fold.Change, test$Specificity.Score, col = as.factor(test$Cluster), pch = 20)
+#'
+#' #all variable genes
+#' unique(rownames(tab))
+#'
+#' #To get all genes without any cutoffs, set adjpval_cutoff to 1 and fc_cutoff to FALSE
+#' tab = getTable(gs, pp, fc_cutoff = FALSE, adjpval_cutoff = 1)
+getTable = function(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE, pseudocount = 1) {
 
 	cl = getClassIndeces(gs$inputClass)
 	
-	if (log) {
+	if (islog) {
 		mat = gs$inputMat
 	} else {
 		mat = log(gs$inputMat + pseudocount)
@@ -41,15 +51,17 @@ getTable = function(gs, pp, fc_cutoff = FALSE, adjpval_cutoff = 0.05) {
 	
 	fc = do.call(cbind, lapply(cl, function(clx) Matrix::rowMeans(mat[,clx]) - Matrix::rowMeans(mat[,-clx])))
 
-	if (!fc_cutoff) {
+	if (isFALSE(fc_cutoff)) {
 		machine = lapply(1:ncol(fc), function(i) names(pp$adjpval[which(pp$adjpval[,i] < adjpval_cutoff),i]))
 	} else {
-		machine = lapply(1:ncol(fc), function(i) intersect(names(pp$adjpval[which(pp$adjpval[,i] < adjpval_cutoff),i]), names(fc[which(fc[,i] < fc_cutoff),i])))
+		machine = lapply(1:ncol(fc), function(i) intersect(names(pp$adjpval[which(pp$adjpval[,i] < adjpval_cutoff),i]), names(fc[which(fc[,i] > fc_cutoff),i])))
 	}
 	
 	tab = do.call(rbind, lapply(1:ncol(fc), function(i) data.frame(fc[which(rownames(fc) %in% machine[[i]]),i], pp$adjpval[which(rownames(pp$adjpval) %in% machine[[i]]),i], gs$specScore[which(rownames(gs$specScore) %in% machine[[i]]),i], colnames(gs$specScore)[i])))
+	colnames(tab) = c("Average.Log.Fold.Change","Adjusted.pvalue","Specificity.Score","Cluster")
 	
-	colnames(tab) = c("Average Log Fold Change","Adjusted p-value","Specificity Score","Cluster")
+	tab = tab[order(tab$Specificity.Score, decreasing = TRUE),]
+	
 	
 	return(tab)
 }
