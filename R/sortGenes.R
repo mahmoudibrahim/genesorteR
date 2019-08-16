@@ -87,6 +87,9 @@
 #' plotTopMarkerHeat(gs_naive, top_n = 10, outs=TRUE, plotheat=FALSE)
 sortGenes = function(x, classLabels, binarizeMethod = "median", returnInput = TRUE, cores = 1) {
 	
+	if (length(classLabels) != ncol(x)) { stop("Length of classLabels is not equal to the number of columns in the expression matrix.") }
+	
+	
 	classLabels = as.factor(classLabels)
 	if (length(setdiff(levels(classLabels), classLabels)) > 0) {
 		classLabels = classLabels[,drop = TRUE] #drop nonoccuring levels

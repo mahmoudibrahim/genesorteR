@@ -69,7 +69,7 @@ plotTopMarkerHeat = function(sg, top_n = 10, colors = colorRampPalette(rev(c("or
 	if (plotheat) {
 		club = colnames(temp) #save column names
 		temp = t(apply(temp, 1, scale))
-		cut = quantile(as.vector(abs(temp)), probs = 0.95)
+		cut = quantile(as.vector(abs(temp)), probs = 0.95, na.rm = TRUE)
 		temp[temp > cut] = cut
 		temp[temp < -cut] = -cut
 		colnames(temp) = club #reassign column names
