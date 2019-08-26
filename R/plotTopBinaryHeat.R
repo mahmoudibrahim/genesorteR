@@ -63,12 +63,27 @@ plotTopBinaryHeat = function(sg, top_n = 10, colors = colorRampPalette(c("white"
 		colnames(temp) = classesTemp
 	}
 
+	if (plotheat & (averageCells > 1)) {
+		club = colnames(temp) #save column names
+		cut = quantile(as.vector(temp), probs = 0.95, na.rm = TRUE)
+		if (cut == 0) {
+			cut = quantile(as.vector(temp), probs = 0.99, na.rm = TRUE)
+		} 
+		if (cut == 0) {
+			cut = 1
+			warning("Could not find an appropriate value to threshold color scale. Matrix may be too sparse. Please consider reporting this warning to mmibrahim@pm.me or at https://github.com/mahmoudibrahim/genesorteR/issues (preferred)")
+		}
+		temp[temp > cut] = cut
+		colnames(temp) = club #reassign column names
+	} else {cut = 1}
+
+	
 	
 	if (plotheat) {
 		if (gaps) {
-			p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(0,1,length.out = 101), gaps_col = cumsum(table(as.integer(colnames(temp)))), border_color = NA)
+			p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(0,cut,length.out = 101), gaps_col = cumsum(table(as.integer(colnames(temp)))), border_color = NA)
 		} else {
-			p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(0,1,length.out = 101), border_color = NA)
+			p=pheatmap(temp, cluster_rows = FALSE, cluster_cols = FALSE, scale = "none", color = colors, display_numbers = F, fontsize = 5, show_colnames=FALSE, show_rownames=TRUE, breaks = seq(0,cut,length.out = 101), border_color = NA)
 		}
 	}
 	
