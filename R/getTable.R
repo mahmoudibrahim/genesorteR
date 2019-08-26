@@ -51,6 +51,11 @@ getTable = function(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE, 
 	
 	fc = do.call(cbind, lapply(cl, function(clx) Matrix::rowMeans(mat[,clx]) - Matrix::rowMeans(mat[,-clx])))
 
+
+	nm = intersect(rownames(fc), rownames(pp$adjpval))
+	fc = fc[which(rownames(fc) %in% nm),]
+	pp$adjpval = pp$adjpval[which(rownames(pp$adjpval) %in% nm),]
+
 	if (isFALSE(fc_cutoff)) {
 		machine = lapply(1:ncol(fc), function(i) names(pp$adjpval[which(pp$adjpval[,i] < adjpval_cutoff),i]))
 	} else {
