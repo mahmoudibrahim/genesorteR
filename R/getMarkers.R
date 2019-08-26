@@ -80,7 +80,6 @@ getMarkers = function(gs, quant = 0.99, mutualInfo = FALSE, classEnt = FALSE) {
   ent = apply(scored, 1, getEntropy)
   maxi = apply(scored, 1, max)
   ww = which(maxi > quantile(maxi, probs=quant))
-  set.seed(111)
   m = Mclust(ent[ww], 2, modelNames="E", verbose = FALSE)
   markers = names( which(m$classification == (which.min(m$parameters$mean)) ) )
 
