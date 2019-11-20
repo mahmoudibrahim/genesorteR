@@ -36,7 +36,7 @@
 #' plot(tab$Average.Log.Fold.Change, tab$Specificity.Score, col = as.factor(tab$Cluster), pch = 20)
 #'
 #' #all variable genes
-#' unique(rownames(tab))
+#' unique(tab$Gene.Name)
 #'
 #' #To get all genes without any cutoffs, set adjpval_cutoff to >1 and fc_cutoff to FALSE
 #' tab = getTable(gs, pp, fc_cutoff = FALSE, adjpval_cutoff = 1.1)
