@@ -40,7 +40,7 @@ write.files = function(gs, prefix = "genesorteROuts", markers = NULL, eachCluste
 		ww = which(rownames(gs$condGeneProb) %in% markers)
 		write.table(round(as.matrix(gs$condGeneProb[ww,]),3), sep = "\t", file = paste0(prefix, "_condProbOfExp_markers.csv"), quote = FALSE)
 		write.table(round(as.matrix(gs$postClustProb[ww,]),3), sep = "\t", file = paste0(prefix, "_postClustProb_markers.csv"), quote = FALSE)
-		write.table(round(as.matrix(gs$specScore[ww,]),3), sep = "\t", file = paste0(prefix, "_specifictyScore_markers.csv"), quote = FALSE)
+		write.table(round(as.matrix(gs$specScore[ww,]),3), sep = "\t", file = paste0(prefix, "_specificityScore_markers.csv"), quote = FALSE)
 	}
 
 }
