@@ -47,7 +47,7 @@ getTable = function(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE, 
 	toolate = which(tooearly == 0)
 
 	if (length(toolate) > 0) {
-		cl = getClassIndeces(gs$inputClass[-(which(gs$inputClass == names(tooearly[toolate])))])
+		cl = getClassIndeces(gs$inputClass[-(which(gs$inputClass %in% names(tooearly[toolate])))])
 		nomen = names(gs$classProb[-toolate])
 		sp = gs$specScore[,-toolate]
 		
