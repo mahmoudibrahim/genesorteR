@@ -14,7 +14,7 @@ getTable(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE,
 
 \item{fc_cutoff}{Default is 0, which means only genes that have an average 
 fold-change higher than 0 for a given cluster are reported. Positive and negative 
-numbers are allowed. Se to FALSE to switch off filtering on the average fold-change
+numbers are allowed. Set to FALSE to switch off filtering on the average fold-change
 value.}
 
 \item{adjpval_cutoff}{A numeric adjusted p-value cutoff value. Default is 0.05.}
@@ -26,9 +26,10 @@ previously to \code{sortGenes} is in log space.}
 taking the log if \code{islog} is FALSE.}
 }
 \value{
-\code{getTable} returns a data frame containing the average log fold change, the adjusted 
-p-value and the specificity score for all variable genes in each cluster. The data frame is sorted 
-by the specificity score. Note that a gene may appear multiple times for multiple clusters.
+\code{getTable} returns a data frame containing the gene name, the average log fold 
+change, the adjusted p-value and the specificity score for all variable genes in each cluster.
+The data frame is sorted by the specificity score. Note that a gene may appear multiple times 
+for multiple clusters.
 }
 \description{
 Summarize \code{sortGenes} and \code{getPValues} results in one data frame.
@@ -50,8 +51,8 @@ plot(tab$Average.Log.Fold.Change, tab$Specificity.Score, col = as.factor(tab$Clu
 #all variable genes
 unique(rownames(tab))
 
-#To get all genes without any cutoffs, set adjpval_cutoff to 1 and fc_cutoff to FALSE
-tab = getTable(gs, pp, fc_cutoff = FALSE, adjpval_cutoff = 1)
+#To get all genes without any cutoffs, set adjpval_cutoff to >1 and fc_cutoff to FALSE
+tab = getTable(gs, pp, fc_cutoff = FALSE, adjpval_cutoff = 1.1)
 }
 \author{
 Mahmoud M Ibrahim <mmibrahim@pm.me>
