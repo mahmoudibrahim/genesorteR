@@ -43,6 +43,8 @@ You can of course also access the documentation of each function like so `?sortG
 Wiki (Tutorials & FAQs)
 ------
 
+* [Pathway and gene set enrichment analysis in large single cell RNA-Seq data](https://github.com/mahmoudibrahim/genesorteR/wiki/From-Cluster-to-Pathway-Enrichment-in-Large-scRNA-Seq-Data) (02 Jan. 2020)
+
 * [CorrNet: Plot beautiful networks from single cell data clustering results using genesorteR & ggraph](https://github.com/mahmoudibrahim/genesorteR/wiki/Visualize-single-cell-data-in-R-using-genesorteR-&-ggraph) (18 Oct. 2019)
 
 more Wiki pages coming soon...
