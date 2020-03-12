@@ -79,7 +79,7 @@ getTable = function(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE, 
 	
 	fc = do.call(cbind, lapply(cl, function(clx) (Matrix::rowMeans(mat[,clx])) - (Matrix::rowMeans(mat[,-clx]))))
 	colnames(fc) = nomen
-	if (!(isFALSE(fc_cutoff))) {
+	if (is.numeric(fc_cutoff)) {
 		tooearly = names(which(apply(fc, 1, function(x) any(x > fc_cutoff))))
 		toolate = which(rownames(fc) %in% tooearly)
 		if (length(toolate) > 0) {
@@ -102,7 +102,7 @@ getTable = function(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE, 
 	tab = data.frame(rep(rownames(fc), ncol(fc)), c(fc), c(pv), c(as.matrix(sp)), rep(colnames(fc), each = nrow(fc)))
 	colnames(tab) = c("Gene.Name", "Average.Log.Fold.Change","Adjusted.pvalue","Specificity.Score","Cluster")
 	
-	if (!(isFALSE(fc_cutoff))) {
+	if (is.numeric(fc_cutoff)) {
 		toolate = which((tab[,2] > fc_cutoff) & (tab[,3] < adjpval_cutoff))
 		tab = tab[toolate,]
 	} else {
