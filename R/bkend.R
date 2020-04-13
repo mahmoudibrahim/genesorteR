@@ -154,7 +154,7 @@ getEntropy = function(x) {
 }
 
 
-getClusterTFIDF = function(condMat cores = 1) {
+getClusterTFIDF = function(condMat, cores = 1) {
 	numDoc = ncol(condMat)
 	if (cores > 1) {
 		idf = mclapply(1:nrow(condMat), function(x) log(numDoc) - log(length(which(condMat[x,] != 0))), mc.cores = cores)
