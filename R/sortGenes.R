@@ -28,6 +28,11 @@
 #' are performed. The values in this matrix can be used to rank features 
 #' (genes in scRNA-Seq) in clusters.
 #' 
+#' When \code{TF_IDF} is "TRUE", Term Frequency-Inverse Document Frequency weights 
+#' for each gene in each cell cluster will also be returned. The analogy here is  
+#' that each cell cluster represents a "document", and each gene a "term". TF-IDF 
+#' was proposed in the famous paper by KF Jones, 1972 (doi:10.1108/eb026526). 
+#'
 #' Note that if returnInput is set to FALSE (input expression matrix will no be
 #' returned in the output), many of the other functions that accept the output of
 #' \code{sortGenes} will break. 
@@ -41,6 +46,8 @@
 #'   coerced to a factor whose levels are the cell cluster names.
 #' @param binarizeMethod Either "median" (default) or "naive" or "adaptiveMedian" or a numeric cutoff. 
 #' See Details.
+#' @param TF_IDF Return the TF-IDF weigts on the cluster level? \code{FALSE} by 
+#' default. See Details.
 #' @param returnInput Return the input matrix and cell classes? \code{TRUE} by 
 #' default. See Details.
 #' @param cores An integer greater than zero (1 by default) that indicates how
@@ -85,7 +92,7 @@
 #'
 #' #different genes?
 #' plotTopMarkerHeat(gs_naive, top_n = 10, outs=TRUE, plotheat=FALSE)
-sortGenes = function(x, classLabels, binarizeMethod = "median", returnInput = TRUE, cores = 1) {
+sortGenes = function(x, classLabels, binarizeMethod = "median", TF_IDF = FALSE, returnInput = TRUE, cores = 1) {
 	
 	if (length(classLabels) != ncol(x)) { stop("Length of classLabels is not equal to the number of columns in the expression matrix.") }
 	
@@ -126,10 +133,16 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", returnInput = TR
 	condGeneCluster = getGeneConditionalCluster_stats(xbin$mat, classProb, classLabels, cores = cores)
 	clusterPostGene = getClusterPostGene(condGeneCluster, geneProb, classProb)
 	specScore = getSpecScore(clusterPostGene, condGeneCluster)
+	
+	if (TF_IDF) {
+		tf_idf = getClusterTFIDF(condGeneCluster)
+	} else {
+		tf_idf = NULL
+	}
 
 	if (returnInput) {
-		return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, inputMat = x, inputClass = classLabels))
+		return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, inputMat = x, inputClass = classLabels, tf_idf = tf_idf))
 	} else {
-		return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb))
+		return(list(binary = xbin$mat, cutoff = xbin$cutoff, removed = rem, geneProb = geneProb, condGeneProb = condGeneCluster, postClustProb = clusterPostGene, specScore = specScore, classProb = classProb, tf_idf = tf_idf))
 	}
 }
