@@ -4,8 +4,15 @@
 \alias{getPValues}
 \title{getPValues}
 \usage{
-getPValues(gs, numPerm = 5, correctMethod = "BH", testGenes = NULL,
-  subsetCells = NULL, cores = 1, seed = 111)
+getPValues(
+  gs,
+  numPerm = 5,
+  correctMethod = "BH",
+  testGenes = NULL,
+  subsetCells = NULL,
+  cores = 1,
+  seed = 111
+)
 }
 \arguments{
 \item{gs}{The output of \code{sortGenes()}.}

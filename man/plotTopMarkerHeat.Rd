@@ -4,11 +4,17 @@
 \alias{plotTopMarkerHeat}
 \title{plotTopMarkerHeat}
 \usage{
-plotTopMarkerHeat(sg, top_n = 10,
-  colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90",
-  "dodgerblue", "dodgerblue4")))(n = 100),
-  newOrder = 1:length(unique(sg$inputClass)), averageCells = 0,
-  gaps = TRUE, outs = FALSE, plotheat = TRUE)
+plotTopMarkerHeat(
+  sg,
+  top_n = 10,
+  colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90", "dodgerblue",
+    "dodgerblue4")))(n = 100),
+  newOrder = 1:length(unique(sg$inputClass)),
+  averageCells = 0,
+  gaps = TRUE,
+  outs = FALSE,
+  plotheat = TRUE
+)
 }
 \arguments{
 \item{sg}{A list, typically the output of \code{sortGenes}.}

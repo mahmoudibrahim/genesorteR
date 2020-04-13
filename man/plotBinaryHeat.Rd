@@ -4,11 +4,20 @@
 \alias{plotBinaryHeat}
 \title{plotBinaryHeat}
 \usage{
-plotBinaryHeat(exp, classes, markers,
+plotBinaryHeat(
+  exp,
+  classes,
+  markers,
   colors = colorRampPalette(c("white", "black"))(n = 100),
-  newOrder = 1:length(unique(classes)), clusterGenes = FALSE,
-  clusterGenesK = length(unique(classes)), averageCells = 0,
-  outs = FALSE, plotheat = TRUE, gaps = TRUE, seed = 10)
+  newOrder = 1:length(unique(classes)),
+  clusterGenes = FALSE,
+  clusterGenesK = length(unique(classes)),
+  averageCells = 0,
+  outs = FALSE,
+  plotheat = TRUE,
+  gaps = TRUE,
+  seed = 10
+)
 }
 \arguments{
 \item{exp}{A matrix of *binary* (0s and 1s) expression values. For example, the one 
@@ -61,7 +70,7 @@ or peak was detected will be plotted (a number between 0 and 1).
 
 \code{clusterGenesK} parameter controls the number of gene clusters when 
 \code{clusterGenes} is \code{TRUE}. By default, it is equal to the number of
-cell types/clusters.
+cell types/clusters. 
 
 By default, the heatmap plots every single cell in one column, this might
 take forever if you have a lot of cells (would say >10k) or it can crash when 

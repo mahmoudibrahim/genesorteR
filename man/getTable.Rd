@@ -4,8 +4,14 @@
 \alias{getTable}
 \title{getTable}
 \usage{
-getTable(gs, pp, fc_cutoff = 0, adjpval_cutoff = 0.05, islog = TRUE,
-  pseudocount = 1)
+getTable(
+  gs,
+  pp,
+  fc_cutoff = 0,
+  adjpval_cutoff = 0.05,
+  islog = TRUE,
+  pseudocount = 1
+)
 }
 \arguments{
 \item{gs}{The output of \code{sortGenes}.}

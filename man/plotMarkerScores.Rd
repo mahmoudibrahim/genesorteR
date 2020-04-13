@@ -4,8 +4,12 @@
 \alias{plotMarkerScores}
 \title{plotMarkerScores}
 \usage{
-plotMarkerScores(mm, gs, markers = mm$markers, colors = c("#99999920",
-  "orangered4"))
+plotMarkerScores(
+  mm,
+  gs,
+  markers = mm$markers,
+  colors = c("#99999920", "orangered4")
+)
 }
 \arguments{
 \item{mm}{The output of \code{getMarkers}}

@@ -4,10 +4,15 @@
 \alias{plotCorrelationHeat}
 \title{plotCorrelationHeat}
 \usage{
-plotCorrelationHeat(gs, markers = NULL, corMethod = "pearson",
-  colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90",
-  "dodgerblue", "dodgerblue4")))(n = 100), outs = FALSE,
-  displayNumbers = TRUE)
+plotCorrelationHeat(
+  gs,
+  markers = NULL,
+  corMethod = "pearson",
+  colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90", "dodgerblue",
+    "dodgerblue4")))(n = 100),
+  outs = FALSE,
+  displayNumbers = TRUE
+)
 }
 \arguments{
 \item{gs}{The output of \code{sortGenes}.}

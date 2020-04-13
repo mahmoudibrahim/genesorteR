@@ -4,9 +4,16 @@
 \alias{plotTopBinaryHeat}
 \title{plotTopBinaryHeat}
 \usage{
-plotTopBinaryHeat(sg, top_n = 10, colors = colorRampPalette(c("white",
-  "black"))(n = 100), newOrder = 1:length(unique(sg$inputClass)),
-  averageCells = 0, gaps = TRUE, outs = FALSE, plotheat = TRUE)
+plotTopBinaryHeat(
+  sg,
+  top_n = 10,
+  colors = colorRampPalette(c("white", "black"))(n = 100),
+  newOrder = 1:length(unique(sg$inputClass)),
+  averageCells = 0,
+  gaps = TRUE,
+  outs = FALSE,
+  plotheat = TRUE
+)
 }
 \arguments{
 \item{sg}{A list, typically the output of \code{sortGenes}.}

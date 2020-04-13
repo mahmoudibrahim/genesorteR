@@ -4,8 +4,14 @@
 \alias{sortGenes}
 \title{sortGenes}
 \usage{
-sortGenes(x, classLabels, binarizeMethod = "median",
-  returnInput = TRUE, cores = 1)
+sortGenes(
+  x,
+  classLabels,
+  binarizeMethod = "median",
+  TF_IDF = FALSE,
+  returnInput = TRUE,
+  cores = 1
+)
 }
 \arguments{
 \item{x}{A numeric (sparse) matrix. It will be coerced to a dgCMatrix sparse
@@ -17,6 +23,9 @@ coerced to a factor whose levels are the cell cluster names.}
 
 \item{binarizeMethod}{Either "median" (default) or "naive" or "adaptiveMedian" or a numeric cutoff. 
 See Details.}
+
+\item{TF_IDF}{Return the TF-IDF weigts on the cluster level? \code{FALSE} by 
+default. See Details.}
 
 \item{returnInput}{Return the input matrix and cell classes? \code{TRUE} by 
 default. See Details.}
@@ -78,9 +87,14 @@ remaining calculations by other functions in the \code{genesorteR} package
 are performed. The values in this matrix can be used to rank features 
 (genes in scRNA-Seq) in clusters.
 
+When \code{TF_IDF} is "TRUE", Term Frequency-Inverse Document Frequency weights 
+for each gene in each cell cluster will also be returned. The analogy here is  
+that each cell cluster represents a "document", and each gene a "term". TF-IDF 
+was proposed in the famous paper by KF Jones, 1972 (doi:10.1108/eb026526). 
+
 Note that if returnInput is set to FALSE (input expression matrix will no be
 returned in the output), many of the other functions that accept the output of
-\code{sortGenes} will break.
+\code{sortGenes} will break. 
 
 \code{sortGenes} can in principle be applied to both a raw count matrix or a
 normalized log-count expression matrix.

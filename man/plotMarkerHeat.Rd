@@ -4,12 +4,21 @@
 \alias{plotMarkerHeat}
 \title{plotMarkerHeat}
 \usage{
-plotMarkerHeat(exp, classes, markers,
-  colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90",
-  "dodgerblue", "dodgerblue4")))(n = 100),
-  newOrder = 1:length(unique(classes)), clusterGenes = FALSE,
-  clusterGenesK = length(unique(classes)), averageCells = 0,
-  outs = FALSE, plotheat = TRUE, gaps = TRUE, seed = 10)
+plotMarkerHeat(
+  exp,
+  classes,
+  markers,
+  colors = colorRampPalette(rev(c("orangered4", "orangered", "gray90", "dodgerblue",
+    "dodgerblue4")))(n = 100),
+  newOrder = 1:length(unique(classes)),
+  clusterGenes = FALSE,
+  clusterGenesK = length(unique(classes)),
+  averageCells = 0,
+  outs = FALSE,
+  plotheat = TRUE,
+  gaps = TRUE,
+  seed = 10
+)
 }
 \arguments{
 \item{exp}{A matrix of expression values. Typically the one supplied to

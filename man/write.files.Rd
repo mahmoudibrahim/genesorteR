@@ -4,8 +4,7 @@
 \alias{write.files}
 \title{write.files}
 \usage{
-write.files(gs, prefix = "genesorteROuts", markers = NULL,
-  eachCluster = FALSE)
+write.files(gs, prefix = "genesorteROuts", markers = NULL, eachCluster = FALSE)
 }
 \arguments{
 \item{gs}{The output of \code{sortGenes()}.}

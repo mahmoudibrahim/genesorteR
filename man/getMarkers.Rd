@@ -37,6 +37,9 @@ returned for each cluster. See Details. \code{FALSE} by default.}
 getMarkers processes the output of \code{sortGenes} to select a relatively
 small set of marker genes.
 }
+\details{
+
+}
 \examples{
 #randomly generated data and cell clusters, almost no markers are found
 set.seed(1234)
