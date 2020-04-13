@@ -134,10 +134,9 @@ sortGenes = function(x, classLabels, binarizeMethod = "median", TF_IDF = FALSE, 
 	clusterPostGene = getClusterPostGene(condGeneCluster, geneProb, classProb)
 	specScore = getSpecScore(clusterPostGene, condGeneCluster)
 	
+	tf_idf = NULL
 	if (TF_IDF) {
 		tf_idf = getClusterTFIDF(condGeneCluster)
-	} else {
-		tf_idf = NULL
 	}
 
 	if (returnInput) {

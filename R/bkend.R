@@ -153,14 +153,9 @@ getEntropy = function(x) {
 	return(ent)
 }
 
-
-getClusterTFIDF = function(condMat, cores = 1) {
-	numDoc = ncol(condMat)
-	if (cores > 1) {
-		idf = mclapply(1:nrow(condMat), function(x) log(numDoc) - log(length(which(condMat[x,] != 0))), mc.cores = cores)
-	} else {
-		idf = apply(condMat, 1, function(x) log(numDoc) - log(length(x[x!=0])))
-	}
+#get TF-IDF on a cell cluter level
+getClusterTFIDF = function(condMat) {
+	idf = log(ncol(condMat)) - log(Matrix::rowSums(binarize(condMat, method = "naive")$mat))
 	tf_idf = exp(log(condMat) + log(idf))
 	tf_idf = as(tf_idf, "dgCMatrix")
 	return(tf_idf)
