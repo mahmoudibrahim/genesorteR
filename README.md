@@ -43,6 +43,8 @@ You can of course also access the documentation of each function like so `?sortG
 Wiki (Tutorials & FAQs)
 ------
 
+* [Comparing genesorteR Specificity Scores to TF-IDF on the Cell Cluster Level in Single Cell Data](https://github.com/mahmoudibrahim/genesorteR/wiki/Specificity-Scores-versus-TF-IDF) (19 Apr. 2020)
+
 * [Finding Genre-specific Actors and Clustering Film Genres](https://github.com/mahmoudibrahim/genesorteR/wiki/Finding-Genre-specific-Actors-and-Clustering-Film-Genres-(data-from-IMDB)) (21 Jan. 2020)
 
 * [Pathway and gene set enrichment analysis in large single cell RNA-Seq data](https://github.com/mahmoudibrahim/genesorteR/wiki/From-Cluster-to-Pathway-Enrichment-in-Large-scRNA-Seq-Data) (02 Jan. 2020)
