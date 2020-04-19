@@ -31,7 +31,7 @@
 #' When \code{TF_IDF} is "TRUE", Term Frequency-Inverse Document Frequency weights 
 #' for each gene in each cell cluster will also be returned. The analogy here is  
 #' that each cell cluster represents a "document", and each gene a "term". TF-IDF 
-#' was proposed in the famous paper by KF Jones, 1972 (doi:10.1108/eb026526). 
+#' was proposed in the famous paper by Karen Spärk Jones, 1972 (doi:10.1108/eb026526). 
 #'
 #' Note that if returnInput is set to FALSE (input expression matrix will no be
 #' returned in the output), many of the other functions that accept the output of
@@ -44,7 +44,8 @@
 #' @param classLabels A numeric or character vector or a factor of the same
 #'   length as ncol(x) that represents cell cluster assignments. It will be
 #'   coerced to a factor whose levels are the cell cluster names.
-#' @param binarizeMethod Either "median" (default) or "naive" or "adaptiveMedian" or a numeric cutoff. 
+#' @param binarizeMethod Either "median" (default) or "naive" or "adaptiveMedian" 
+#'   or a numeric cutoff. 
 #' See Details.
 #' @param TF_IDF Return the TF-IDF weigts on the cluster level? \code{FALSE} by 
 #' default. See Details.
@@ -73,7 +74,8 @@
 #'   number of cell clusters, containing the fraction of cells belonging to each
 #'   cluster.} \item{inputMat}{the input \code{x} matrix, after being coerced
 #'   to a sparse matrix of class dgCMatrix.} \item{inputClass}{the input
-#'   \code{classLabels} after being coerced to a factor.}
+#'   \code{classLabels} after being coerced to a factor. \item{tf_idf}{If TF_IDF 
+#'    is TRUE, this will be a sparse matrix with TF-IDF weights, NULL otherwise.}
 #' @author Mahmoud M Ibrahim <mmibrahim@pm.me>
 #' @export
 #' @examples
