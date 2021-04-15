@@ -12,9 +12,21 @@ genesorteR was developed at the RWTH Aachen University Hospital.
 
 What genesorteR Can Do
 ------
-* Rank genes (scRNA-Seq) or open chromatin regions (snATAC-Seq) by "specificity" in different clusters in scRNA-Seq data
+* Rank genes (scRNA-Seq) or open chromatin regions (snATAC-Seq) by "specificity" in cell clusters
 * Find small sets of marker genes and differentially expressed / highly variable genes or accessible regions
 * Cluster genes/open chromatin regions and make heatmap summaries of single cell data
+
+
+Cited by...
+------
+
+* [Cook & Vanderhyden, bioRxiv 2021](https://www.biorxiv.org/content/10.1101/2021.03.05.434142v1.full)
+* [Kuppe, Ibrahim et al., Nature 2021](https://www.nature.com/articles/s41586-020-2941-1)
+* [Vargo & Gilbert, BMC Bioinformatics 2020](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-020-03641-z)
+* [De Boeck, Ahn et al., Nature Communications 2020](https://www.nature.com/articles/s41467-020-18569-4)
+* [Lu, Shiau, Yi et al., Dev. Cell 2020](https://doi.org/10.1016/j.devcel.2020.04.009)
+* [Berg et al. bioRxiv 2020](https://www.biorxiv.org/content/10.1101/2020.03.31.018820v1)
+
 
 
 Install genesorteR
@@ -26,16 +38,6 @@ install.packages("devtools")
 #install genesorteR from the Github repository
 devtools::install_github("mahmoudibrahim/genesorteR") 
 ```
-
-Cited by...
-------
-
-* [Cook & Vanderhyden, bioRxiv 2021](https://www.biorxiv.org/content/10.1101/2021.03.05.434142v1.full)
-* [Kuppe, Ibrahim et al., Nature 2021](https://www.nature.com/articles/s41586-020-2941-1)
-* [Vargo & Gilbert, BMC Bioinformatics 2020](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-020-03641-z)
-* [De Boeck, Ahn et al., Nature Communications 2020](https://www.nature.com/articles/s41467-020-18569-4)
-* [Lu, Shiau, Yi et al., Dev. Cell 2020](https://doi.org/10.1016/j.devcel.2020.04.009)
-* [Berg et al. bioRxiv 2020](https://www.biorxiv.org/content/10.1101/2020.03.31.018820v1)
 
 
 genesorteR Documentation
